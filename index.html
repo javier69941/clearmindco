@@ -1,0 +1,2399 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Clear Mind Co.">
+<meta name="theme-color" content="#2C2416">
+<title>Clear Mind Co. — FOCUS MODE</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --cream:#F7F2EA;--page:#FEFCF7;--white:#FFFFFF;
+  --line:#EDE4D4;--dark:#2C2416;--text:#3D3020;
+  --dim:#A09278;--faint:#E2D9C8;
+  --brown:#9B6F3E;--brown2:#B8854A;--brown-bg:#FAF0E2;
+  --sage:#5C7A5A;--sage-bg:#EBF2EA;
+  --rust:#9B4520;--rust-bg:#FAEAE3;
+  --gold:#B8872A;--gold-bg:#FDF8EC;
+}
+/* ── DARK MODE ── */
+body.dark-mode{
+  --cream:#1A1510;--page:#211C16;--white:#2A2318;
+  --line:#3A3028;--dark:#F5EDE0;--text:#E8D8C4;
+  --dim:#8B7A65;--faint:#4A3D30;
+  --brown:#C4946A;--brown2:#D4A478;--brown-bg:#2E2218;
+  --sage:#7AAA78;--sage-bg:#1A2A1A;
+  --rust:#D4704A;--rust-bg:#2A1810;
+  --gold:#D4A830;--gold-bg:#2A2010;
+}
+body.dark-mode .cover{background:linear-gradient(135deg,#3A2C1E 0%,#2C2010 45%,#1A1408 100%);}
+body.dark-mode .pomo{background:#1A1510;}
+body.dark-mode .focus-card{background:#1A1510;}
+body.dark-mode .focus-card::before{background:radial-gradient(ellipse at 75% 25%,rgba(196,148,106,.15),transparent 58%);}
+body.dark-mode .setup-card{background:#211C16;border:1px solid #3A3028;}
+body.dark-mode .cel{background:#211C16;}
+body.dark-mode .cal-card{background:#211C16;}
+body.dark-mode input,body.dark-mode textarea,body.dark-mode select{background:#2E2218!important;color:var(--text)!important;border-color:#4A3D30!important;}
+body.dark-mode .coach-hero{background:linear-gradient(135deg,#3A2C1E,#2C2010);}
+@media print{
+  .topbar,.cover,.setup-modal,.overlay,.cal-modal{display:none!important;}
+  .app{height:auto!important;}
+  .scroll{overflow:visible!important;padding:0!important;}
+  .pg{display:none!important;}
+  #pg-tasks{display:block!important;}
+  body{background:white!important;color:black!important;}
+}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--text);height:100vh;overflow:hidden;font-size:13px;transition:background .3s,color .3s;}
+
+/* ─── SETUP ─── */
+.setup-modal{position:fixed;inset:0;z-index:1000;background:rgba(44,36,22,.7);backdrop-filter:blur(14px);display:flex;align-items:flex-start;justify-content:center;overflow-y:auto;padding:16px 0 32px;}
+.setup-modal.gone{display:none;}
+.setup-card{background:var(–white);border-radius:20px;padding:28px 24px;max-width:390px;width:92%;box-shadow:0 24px 60px rgba(44,36,22,.2);animation:pop .35s cubic-bezier(.34,1.56,.64,1);position:relative;margin:auto;}
+.setup-card::-webkit-scrollbar{width:0;}
+@keyframes pop{from{transform:scale(.88);opacity:0}to{transform:scale(1);opacity:1}}
+.setup-logo{font-family:‘Cormorant Garamond’,serif;font-size:22px;font-weight:700;color:var(–dark);text-align:center;margin-bottom:3px;}
+.setup-tag{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(–dim);text-align:center;margin-bottom:22px;}
+.setup-dots{display:flex;gap:6px;justify-content:center;margin-bottom:20px;}
+.sdot{width:6px;height:6px;border-radius:50%;background:var(–faint);transition:all .2s;}
+.sdot.on{background:var(–brown);width:18px;border-radius:3px;}
+.ss{display:none;} .ss.on{display:block;animation:fadeIn .2s ease;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
+.sq{font-family:‘Cormorant Garamond’,serif;font-size:21px;font-weight:700;color:var(–dark);line-height:1.3;margin-bottom:5px;}
+.sh{font-size:12px;color:var(–dim);margin-bottom:16px;line-height:1.5;}
+.si{width:100%;background:var(–cream);border:1.5px solid var(–line);border-radius:10px;padding:12px 14px;font-family:‘DM Sans’,sans-serif;font-size:14px;color:var(–dark);outline:none;transition:border-color .15s;margin-bottom:11px;}
+.si::placeholder{color:var(–faint);} .si:focus{border-color:var(–brown);}
+.sta{width:100%;background:var(–cream);border:1.5px solid var(–line);border-radius:10px;padding:11px 14px;font-family:‘DM Sans’,sans-serif;font-size:13px;color:var(–dark);outline:none;resize:none;min-height:70px;line-height:1.6;transition:border-color .15s;margin-bottom:11px;}
+.sta::placeholder{color:var(–faint);} .sta:focus{border-color:var(–brown);}
+.snext{width:100%;background:var(–dark);color:var(–white);border:none;border-radius:10px;padding:12px;font-family:‘DM Sans’,sans-serif;font-size:14px;font-weight:500;cursor:pointer;}
+.snext:hover{opacity:.85;}
+.sback{width:100%;background:none;border:none;color:var(–dim);font-family:‘DM Sans’,sans-serif;font-size:12px;font-weight:500;cursor:pointer;padding:10px;margin-top:4px;border-radius:8px;transition:color .15s;}
+.sback:hover{color:var(–brown);}
+.c-opts{display:flex;flex-direction:column;gap:7px;margin-bottom:14px;}
+.c-opt{padding:12px 15px;border-radius:10px;border:1.5px solid var(–line);background:var(–white);font-family:‘DM Sans’,sans-serif;font-size:13px;color:var(–text);cursor:pointer;transition:all .15s;text-align:center;}
+.c-opt:hover{border-color:var(–brown);color:var(–brown);}
+.c-opt.sel{border-color:var(–brown);background:var(–brown-bg);color:var(–brown);font-weight:500;}
+.push-row{display:flex;gap:8px;margin-bottom:14px;}
+.push-opt{flex:1;padding:13px 5px;border-radius:10px;border:1.5px solid var(–line);background:var(–white);font-family:‘DM Sans’,sans-serif;font-size:11px;font-weight:500;color:var(–dim);cursor:pointer;transition:all .15s;text-align:center;line-height:1.6;}
+.push-opt.sel{border-color:var(–brown);background:var(–brown-bg);color:var(–brown);}
+.growth-opts{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px;}
+.growth-opt{padding:16px 10px;border-radius:12px;border:1.5px solid var(–line);background:var(–white);cursor:pointer;transition:all .15s;text-align:center;}
+.growth-opt:hover{border-color:var(–brown);}
+.growth-opt.sel{border-color:var(–brown);background:var(–brown-bg);}
+.growth-opt-icon{font-size:28px;margin-bottom:6px;}
+.growth-opt-name{font-size:12px;font-weight:600;color:var(–dark);}
+.growth-opt-sub{font-size:10px;color:var(–dim);margin-top:2px;}
+
+/* ─── CELEBRATION ─── */
+.overlay{display:none;position:fixed;inset:0;z-index:998;background:rgba(44,36,22,.55);backdrop-filter:blur(10px);align-items:flex-start;justify-content:center;overflow-y:auto;padding:20px 0;}
+.overlay.show{display:flex;}
+.cel{background:var(–white);border-radius:20px;padding:32px 26px;text-align:center;max-width:310px;width:90%;box-shadow:0 24px 60px rgba(44,36,22,.18);animation:pop .35s cubic-bezier(.34,1.56,.64,1);margin:auto;}
+.cel-emoji{font-size:46px;display:block;margin-bottom:12px;}
+.cel-title{font-family:‘Cormorant Garamond’,serif;font-size:23px;font-weight:700;color:var(–dark);margin-bottom:7px;}
+.cel-msg{font-size:13px;color:var(–text);line-height:1.7;margin-bottom:15px;}
+.cel-reward{background:var(–brown-bg);border-radius:10px;padding:11px 14px;margin-bottom:16px;}
+.cel-lbl{font-size:9px;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;color:var(–brown);margin-bottom:2px;}
+.cel-val{font-size:13px;font-weight:500;color:var(–dark);}
+.cel-btn{background:var(–dark);color:var(–white);border:none;border-radius:8px;padding:10px 22px;width:100%;font-family:‘DM Sans’,sans-serif;font-size:13px;font-weight:500;cursor:pointer;}
+
+/* ─── CALENDAR MODAL ─── */
+.cal-modal{display:none;position:fixed;inset:0;z-index:997;background:rgba(44,36,22,.55);backdrop-filter:blur(8px);align-items:flex-start;justify-content:center;overflow-y:auto;padding:16px 0;}
+.cal-modal.show{display:flex;}
+.cal-card{background:var(–white);border-radius:16px;padding:20px;max-width:380px;width:94%;box-shadow:0 20px 50px rgba(44,36,22,.18);animation:pop .3s ease;margin:auto;}
+.cal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;}
+.cal-month{font-family:‘Cormorant Garamond’,serif;font-size:20px;font-weight:700;color:var(–dark);}
+.cal-nav{width:28px;height:28px;border-radius:6px;border:1px solid var(–line);background:none;cursor:pointer;font-size:14px;color:var(–dim);}
+.cal-nav:hover{background:var(–cream);}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:14px;}
+.cal-day-hdr{text-align:center;font-size:10px;font-weight:500;color:var(–dim);letter-spacing:.5px;padding:4px 0;}
+.cal-day{min-height:36px;border-radius:6px;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;transition:all .15s;font-size:12px;font-weight:500;color:var(–text);gap:2px;}
+.cal-day:hover{background:var(–cream);}
+.cal-day.today{background:var(–dark);color:var(–white);font-weight:700;}
+.cal-day.has-note{position:relative;}
+.cal-day.has-note::after{content:’’;width:4px;height:4px;border-radius:50%;background:var(–brown);position:absolute;bottom:3px;}
+.cal-day.empty{opacity:0;pointer-events:none;}
+.cal-entry-area{border-top:1px solid var(–line);padding-top:14px;}
+.cal-entry-title{font-size:12px;font-weight:600;color:var(–dark);margin-bottom:8px;}
+.cal-inp{width:100%;background:var(–cream);border:1px solid var(–line);border-radius:8px;padding:9px 12px;font-family:‘DM Sans’,sans-serif;font-size:12px;color:var(–dark);outline:none;transition:border-color .15s;margin-bottom:8px;}
+.cal-inp::placeholder{color:var(–faint);}
+.cal-inp:focus{border-color:var(–brown);}
+.cal-save{background:var(–dark);color:var(–white);border:none;border-radius:7px;padding:8px 16px;font-family:‘DM Sans’,sans-serif;font-size:12px;font-weight:500;cursor:pointer;}
+.cal-close{background:none;border:none;color:var(–dim);font-size:18px;cursor:pointer;padding:0 4px;}
+
+/* ─── APP ─── */
+.app{display:flex;flex-direction:column;height:100vh;}
+
+/* ─── TOP BAR ─── */
+.topbar{background:var(–page);border-bottom:1px solid var(–line);flex-shrink:0;}
+.topbar-row1{height:42px;display:flex;align-items:center;padding:0 10px;gap:0;overflow:hidden;}
+.tb-brand{font-family:‘Cormorant Garamond’,serif;font-size:14px;font-weight:700;color:var(–dark);margin-right:8px;white-space:nowrap;flex-shrink:0;}
+.tb-tab{padding:0 9px;height:42px;display:flex;align-items:center;font-size:11px;font-weight:500;color:var(–dim);cursor:pointer;border-bottom:2px solid transparent;transition:all .15s;white-space:nowrap;flex-shrink:0;}
+.tb-tab:hover{color:var(–text);}
+.tb-tab.on{color:var(–brown);border-bottom-color:var(–brown);font-weight:600;}
+.tb-coach{padding:5px 10px;background:var(–dark);color:var(–white);border:none;border-radius:6px;font-family:‘DM Sans’,sans-serif;font-size:10px;font-weight:500;cursor:pointer;margin-left:6px;flex-shrink:0;white-space:nowrap;}
+.tb-coach:hover{opacity:.85;}
+/* Page nav — horizontally scrollable, no overflow issues */
+.page-nav{display:flex;overflow-x:auto;border-top:1px solid var(–line);padding:0;-webkit-overflow-scrolling:touch;}
+.page-nav::-webkit-scrollbar{height:0;}
+.pn{display:flex;align-items:center;padding:8px 12px;cursor:pointer;font-size:11px;font-weight:500;color:var(–dim);white-space:nowrap;border-bottom:2px solid transparent;transition:all .15s;flex-shrink:0;}
+.pn:hover{color:var(–text);}
+.pn.on{color:var(–brown);border-bottom-color:var(–brown);font-weight:600;}
+
+/* ─── COVER ─── */
+.cover{height:88px;background:linear-gradient(135deg,#D4B896 0%,#A8784A 45%,#7A5230 100%);display:flex;align-items:flex-end;padding:0 18px 12px;flex-shrink:0;position:relative;overflow:hidden;}
+.cover::before{content:’’;position:absolute;inset:0;background:radial-gradient(ellipse at 15% 50%,rgba(255,255,255,.07),transparent 55%);}
+.c-eye{position:absolute;top:11px;left:20px;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.4);}
+.c-greeting{font-family:‘Cormorant Garamond’,serif;font-size:27px;font-weight:600;font-style:italic;color:rgba(255,255,255,.92);position:relative;z-index:1;}
+.c-date{position:absolute;top:11px;right:20px;font-size:10px;color:rgba(255,255,255,.38);}
+
+/* ─── SCROLL ─── */
+.scroll{flex:1;overflow-y:auto;padding:16px 16px 60px;}
+.scroll::-webkit-scrollbar{width:3px;}
+.scroll::-webkit-scrollbar-thumb{background:var(–faint);border-radius:3px;}
+
+/* ─── PAGES ─── */
+.pg{display:none;max-width:680px;}
+.pg.on{display:block;animation:fade .18s ease;}
+@keyframes fade{from{opacity:0;transform:translateY(3px)}to{opacity:1;transform:translateY(0)}}
+@keyframes growPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
+
+/* ─── UTILS ─── */
+.slbl{font-size:9px;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:var(–dim);margin-bottom:9px;display:flex;align-items:center;gap:10px;}
+.slbl::after{content:’’;flex:1;height:1px;background:var(–line);}
+.gap{height:14px;}
+.card{background:var(–white);border:1px solid var(–line);border-radius:12px;padding:16px 18px;margin-bottom:10px;}
+.card-title{font-family:‘Cormorant Garamond’,serif;font-size:17px;font-weight:700;color:var(–dark);margin-bottom:3px;}
+.card-sub{font-size:11px;color:var(–dim);margin-bottom:13px;line-height:1.55;}
+.r-lbl{font-size:11px;font-weight:500;color:var(–text);margin-bottom:4px;}
+.r-inp{width:100%;background:var(–cream);border:1px solid var(–line);border-radius:7px;padding:8px 11px;font-family:‘DM Sans’,sans-serif;font-size:12px;color:var(–dark);outline:none;transition:border-color .15s;}
+.r-inp::placeholder{color:var(–faint);}
+.r-inp:focus{border-color:var(–brown);}
+.r-item{margin-bottom:10px;}
+.action-btn{width:100%;background:var(–dark);color:var(–white);border:none;border-radius:8px;padding:10px;font-family:‘DM Sans’,sans-serif;font-size:12px;font-weight:500;cursor:pointer;margin-top:10px;}
+.action-btn:hover{opacity:.85;}
+.win-btn{width:100%;background:none;border:1px dashed var(–line);border-radius:8px;padding:10px;font-family:‘DM Sans’,sans-serif;font-size:12px;font-weight:500;color:var(–dim);cursor:pointer;transition:all .15s;margin-top:10px;}
+.win-btn:hover{border-color:var(–brown);color:var(–brown);}
+
+/* ─── QUOTE ─── */
+.quote-card{background:var(–white);border:1px solid var(–line);border-radius:12px;padding:15px 17px;margin-bottom:12px;}
+.q-mark{font-family:‘Cormorant Garamond’,serif;font-size:36px;color:var(–faint);line-height:.7;float:left;margin-right:8px;margin-top:4px;}
+.q-text{font-family:‘Cormorant Garamond’,serif;font-size:14px;font-style:italic;color:var(–text);line-height:1.6;overflow:hidden;}
+.q-author{font-size:10px;color:var(–brown);font-weight:600;margin-top:7px;letter-spacing:.5px;clear:both;}
+
+/* ─── FOCUS TASK CARD ─── */
+.focus-card{background:var(–dark);border-radius:12px;padding:20px;margin-bottom:12px;position:relative;overflow:hidden;}
+.focus-card::before{content:’’;position:absolute;inset:0;background:radial-gradient(ellipse at 75% 25%,rgba(139,108,66,.2),transparent 58%);}
+.fc-lbl{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.36);margin-bottom:7px;position:relative;}
+.fc-task{font-family:‘Cormorant Garamond’,serif;font-size:18px;font-weight:600;color:white;line-height:1.35;margin-bottom:15px;position:relative;}
+.fc-btn{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);border-radius:8px;padding:8px 14px;cursor:pointer;transition:all .2s;position:relative;}
+.fc-btn:hover{background:rgba(255,255,255,.17);}
+.fc-btn.done{background:var(–sage);border-color:var(–sage);}
+.fc-btn-text{font-size:12px;font-weight:500;color:white;}
+
+/* ─── STATS ─── */
+.stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:12px;}
+@media(max-width:360px){.stats{grid-template-columns:1fr 1fr;}}
+.stat{background:var(–white);border:1px solid var(–line);border-radius:8px;padding:11px 13px;}
+.stat-v{font-family:‘Cormorant Garamond’,serif;font-size:21px;font-weight:700;color:var(–dark);line-height:1;}
+.stat-l{font-size:9px;font-weight:500;letter-spacing:1px;text-transform:uppercase;color:var(–dim);margin-top:3px;}
+.stat-bar{height:3px;background:var(–faint);border-radius:3px;overflow:hidden;margin-top:6px;}
+.stat-bf{height:100%;border-radius:3px;background:var(–brown);transition:width .5s ease;}
+
+/* ─── GROWTH GAME ─── */
+.growth-widget{background:var(–white);border:1px solid var(–line);border-radius:12px;padding:16px 18px;margin-bottom:12px;}
+.gw-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
+.gw-title{font-family:‘Cormorant Garamond’,serif;font-size:15px;font-weight:700;color:var(–dark);}
+.gw-level{font-size:10px;font-weight:600;color:var(–brown);background:var(–brown-bg);padding:3px 10px;border-radius:20px;}
+.gw-scene{height:120px;display:flex;align-items:center;justify-content:center;margin-bottom:12px;position:relative;}
+/* Flower stages */
+.flower-scene{position:relative;width:100%;height:100%;display:flex;align-items:flex-end;justify-content:center;}
+.f-soil{width:100px;height:16px;background:linear-gradient(180deg,#8B6C42,#6B4E2A);border-radius:8px;position:absolute;bottom:0;}
+.f-stem{position:absolute;bottom:14px;left:50%;transform:translateX(-50%);width:4px;border-radius:2px;background:#5C7A5A;transition:height 1s ease,opacity .5s ease;}
+.f-leaf-l,.f-leaf-r{position:absolute;width:14px;height:22px;border-radius:50% 50% 0 50%;background:#5C7A5A;opacity:0;transition:opacity .5s ease;}
+.f-leaf-l{left:calc(50% - 18px);transform:rotate(-30deg);transform-origin:right bottom;}
+.f-leaf-r{right:calc(50% - 18px);transform:rotate(30deg) scaleX(-1);transform-origin:left bottom;}
+.f-bloom{position:absolute;font-size:36px;bottom:0;left:50%;transform:translateX(-50%);opacity:0;transition:opacity .5s ease,transform .5s ease;transform:translateX(-50%) scale(.5);}
+.f-bloom.show{opacity:1;transform:translateX(-50%) scale(1);}
+/* Knight stages */
+.knight-scene{display:flex;align-items:center;justify-content:center;flex-direction:column;gap:6px;}
+.knight-icon{font-size:52px;transition:all .5s ease;}
+.knight-title-badge{font-size:11px;font-weight:600;color:var(–brown);background:var(–brown-bg);padding:3px 12px;border-radius:20px;transition:all .3s;}
+/* Progress bar */
+.gw-progress{height:5px;background:var(–faint);border-radius:5px;overflow:hidden;margin-bottom:6px;}
+.gw-progress-fill{height:100%;border-radius:5px;background:linear-gradient(90deg,var(–brown),var(–brown2));transition:width .6s ease;}
+.gw-status{font-size:11px;color:var(–dim);font-style:italic;}
+
+/* ─── BRAIN DUMP AI ─── */
+.dump-area{width:100%;background:var(–cream);border:1px solid var(–line);border-radius:8px;padding:12px 14px;font-family:‘DM Sans’,sans-serif;font-size:13px;color:var(–dark);resize:none;outline:none;min-height:80px;line-height:1.7;transition:border-color .15s;}
+.dump-area::placeholder{color:var(–faint);}
+.dump-area:focus{border-color:var(–brown);}
+.organize-btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:10px;background:linear-gradient(135deg,var(–brown),var(–brown2));color:var(–white);border:none;border-radius:8px;font-family:‘DM Sans’,sans-serif;font-size:12px;font-weight:500;cursor:pointer;margin-top:8px;transition:opacity .15s;}
+.organize-btn:hover{opacity:.88;}
+.organize-btn:disabled{opacity:.45;cursor:default;}
+.organized-result{margin-top:14px;display:none;}
+.priority-group{margin-bottom:14px;}
+.pg-header{display:flex;align-items:center;gap:8px;margin-bottom:8px;padding-bottom:6px;border-bottom:1px solid var(–line);}
+.pg-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+.dot-must{background:var(–rust);}
+.dot-should{background:var(–gold);}
+.dot-later{background:var(–sage);}
+.pg-label{font-size:11px;font-weight:600;color:var(–dark);}
+.pg-desc{font-size:10px;color:var(–dim);margin-left:auto;}
+.checklist-item{display:flex;align-items:flex-start;gap:10px;padding:9px 0;border-bottom:1px solid rgba(232,224,208,.5);}
+.cl-check{width:18px;height:18px;border-radius:4px;border:1.5px solid var(–faint);flex-shrink:0;margin-top:1px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:9px;color:transparent;transition:all .15s;}
+.cl-check.done{background:var(–sage);border-color:var(–sage);color:white;}
+.cl-body{flex:1;}
+.cl-task{font-size:13px;font-weight:500;color:var(–dark);}
+.cl-task.striked{text-decoration:line-through;color:var(–dim);}
+.cl-steps{margin-top:5px;}
+.cl-step{font-size:11px;color:var(–dim);padding:2px 0;display:flex;gap:6px;align-items:flex-start;}
+.cl-step-n{color:var(–brown);font-weight:600;flex-shrink:0;}
+
+/* ─── TASKS (PLANNER) ─── */
+.mit-explain{background:var(–gold-bg);border:1px solid #E8D8C0;border-radius:8px;padding:10px 13px;margin-bottom:12px;}
+.mit-explain-title{font-size:11px;font-weight:700;color:var(–gold);margin-bottom:3px;letter-spacing:.3px;}
+.mit-explain-body{font-size:11px;color:var(–text);line-height:1.55;}
+.task-item{display:flex;align-items:flex-start;gap:11px;padding:12px 0;border-bottom:1px solid var(–line);cursor:pointer;}
+.task-item:first-child{border-top:1px solid var(–line);}
+.task-item.done .t-name{text-decoration:line-through;color:var(–dim);}
+.t-dot{width:20px;height:20px;border-radius:50%;border:1.5px solid var(–faint);flex-shrink:0;margin-top:1px;display:flex;align-items:center;justify-content:center;font-size:9px;color:transparent;transition:all .2s;}
+.task-item.done .t-dot{background:var(–sage);border-color:var(–sage);color:white;}
+.t-body{flex:1;}
+.t-name{font-size:13px;font-weight:500;color:var(–dark);}
+.t-note{font-size:11px;color:var(–dim);margin-top:2px;}
+/* ─── TASK PRIORITY PILLS — chunky, alive ─── */
+.t-pri{font-size:10px;font-weight:700;padding:4px 11px;border-radius:20px;flex-shrink:0;margin-top:2px;letter-spacing:.3px;}
+.p-must{background:var(–rust);color:var(–white);}
+.p-should{background:var(–gold);color:var(–white);}
+.p-bonus{background:var(–sage);color:var(–white);}
+
+/* ─── DOPAMINE REWARD BADGE ─── */
+.dopamine-badge{
+display:inline-flex;align-items:center;gap:5px;
+background:linear-gradient(135deg,var(–brown),var(–brown2));
+color:var(–white);
+font-size:10px;font-weight:600;
+padding:4px 12px;border-radius:20px;
+letter-spacing:.3px;
+}
+
+/* ─── WHY THIS WORKS PILLS ─── */
+.why-pill{
+display:inline-flex;align-items:center;gap:6px;
+background:var(–white);border:1.5px solid var(–line);
+border-radius:20px;padding:7px 14px;
+font-size:11px;font-weight:500;color:var(–text);
+margin:4px;transition:all .15s;cursor:default;
+}
+.why-pill-dot{width:7px;height:7px;border-radius:50%;background:var(–brown);flex-shrink:0;}
+.add-task-row{display:flex;gap:7px;margin-top:11px;flex-wrap:wrap;}
+.task-inp{flex:1;min-width:120px;background:var(–cream);border:1px solid var(–line);border-radius:7px;padding:8px 11px;font-family:‘DM Sans’,sans-serif;font-size:12px;color:var(–dark);outline:none;transition:border-color .15s;}
+.task-inp::placeholder{color:var(–faint);}
+.task-inp:focus{border-color:var(–brown);}
+.pri-sel{background:var(–cream);border:1px solid var(–line);border-radius:7px;padding:8px;font-family:‘DM Sans’,sans-serif;font-size:11px;color:var(–text);outline:none;cursor:pointer;}
+.add-task-btn{padding:8px 14px;background:var(–dark);color:var(–white);border:none;border-radius:7px;font-family:‘DM Sans’,sans-serif;font-size:12px;font-weight:500;cursor:pointer;}
+
+/* ─── HABITS ─── */
+.habit{display:flex;align-items:center;gap:11px;padding:12px 0;border-bottom:1px solid var(–line);}
+.habit:first-child{border-top:1px solid var(–line);}
+.h-box{width:20px;height:20px;border-radius:4px;border:1.5px solid var(–faint);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:9px;color:transparent;transition:all .2s;cursor:pointer;}
+.habit.done .h-box{background:var(–brown);border-color:var(–brown);color:white;}
+.habit.done .h-name{color:var(–dim);}
+.h-name{flex:1;font-size:13px;color:var(–dark);cursor:pointer;}
+.h-streak{font-size:10px;color:var(–dim);}
+.habit.done .h-streak{color:var(–brown);font-weight:500;}
+.h-del{width:22px;height:22px;border-radius:5px;border:none;background:none;color:var(–faint);cursor:pointer;font-size:12px;transition:all .15s;display:flex;align-items:center;justify-content:center;}
+.h-del:hover{background:var(–rust-bg);color:var(–rust);}
+.add-habit-row{display:flex;gap:7px;margin-top:10px;}
+.habit-inp{flex:1;background:var(–cream);border:1px solid var(–line);border-radius:7px;padding:8px 11px;font-family:‘DM Sans’,sans-serif;font-size:12px;color:var(–dark);outline:none;transition:border-color .15s;}
+.habit-inp::placeholder{color:var(–faint);}
+.habit-inp:focus{border-color:var(–brown);}
+.add-habit-btn{padding:8px 14px;background:var(–dark);color:var(–white);border:none;border-radius:7px;font-family:‘DM Sans’,sans-serif;font-size:12px;font-weight:500;cursor:pointer;}
+.mood-row{display:flex;gap:7px;margin-bottom:5px;}
+.mood-opt{flex:1;padding:9px 4px;border-radius:8px;border:1px solid var(–line);background:var(–white);text-align:center;font-size:19px;cursor:pointer;transition:all .15s;}
+.mood-opt:hover{transform:scale(1.05);}
+.mood-opt.on{border-color:var(–brown);background:var(–brown-bg);transform:scale(1.07);}
+.mood-lbl{font-size:11px;color:var(–dim);text-align:center;margin-top:5px;}
+
+/* ─── FOCUS ─── */
+.pomo{background:var(–dark);border-radius:12px;padding:22px 18px;text-align:center;}
+.pomo-lbl{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:8px;}
+.pomo-time{font-family:‘Cormorant Garamond’,serif;font-size:50px;font-weight:700;color:white;letter-spacing:-1px;line-height:1;}
+.pomo-phase{font-size:11px;color:rgba(255,255,255,.35);margin-top:5px;}
+.pomo-btns{display:flex;gap:8px;justify-content:center;margin-top:14px;}
+.pb{padding:8px 20px;border-radius:6px;border:none;font-family:‘DM Sans’,sans-serif;font-size:12px;font-weight:500;cursor:pointer;}
+.pb-go{background:var(–white);color:var(–dark);}
+.pb-rst{background:rgba(255,255,255,.1);color:rgba(255,255,255,.4);}
+.step-row{display:flex;align-items:center;gap:9px;margin-bottom:7px;}
+.step-n{width:21px;height:21px;border-radius:50%;background:var(–brown-bg);border:1px solid var(–line);color:var(–brown);font-size:10px;font-weight:500;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.s-inp{flex:1;background:var(–cream);border:1px solid var(–line);border-radius:7px;padding:8px 11px;font-family:‘DM Sans’,sans-serif;font-size:12px;color:var(–dark);outline:none;transition:border-color .15s;}
+.s-inp::placeholder{color:var(–faint);}
+.s-inp:focus{border-color:var(–brown);}
+
+/* ─── GOALS ─── */
+.goal-item{padding:13px 0;border-bottom:1px solid var(–line);}
+.goal-item:first-child{border-top:1px solid var(–line);}
+.g-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:7px;}
+.g-name{font-size:13px;font-weight:500;color:var(–dark);flex:1;margin-right:10px;}
+.g-pct{font-size:12px;font-weight:700;color:var(–brown);flex-shrink:0;}
+.g-track{height:3px;background:var(–faint);border-radius:3px;overflow:hidden;margin-bottom:4px;}
+.g-fill{height:100%;border-radius:3px;}
+.g-meta{font-size:10px;color:var(–dim);}
+.g-why{font-size:11px;color:var(–brown);font-style:italic;margin-top:3px;}
+
+/* ─── JOURNAL ─── */
+.jp{background:var(–brown-bg);border:1px solid #E8D8C4;border-radius:7px;padding:8px 12px;font-size:12px;color:var(–brown);cursor:pointer;font-weight:500;transition:all .15s;margin-bottom:6px;}
+.jp:hover{background:var(–brown);color:var(–white);}
+.j-area{width:100%;min-height:150px;background:var(–cream);border:1px solid var(–line);border-radius:8px;padding:12px 14px;font-family:‘Cormorant Garamond’,serif;font-size:16px;color:var(–dark);line-height:1.8;resize:none;outline:none;transition:border-color .15s;}
+.j-area::placeholder{color:var(–faint);font-style:italic;}
+.j-area:focus{border-color:var(–brown);}
+.save-btn{background:var(–dark);color:var(–white);border:none;border-radius:7px;padding:8px 16px;font-family:‘DM Sans’,sans-serif;font-size:12px;font-weight:500;cursor:pointer;margin-top:9px;}
+.j-entry{background:var(–white);border:1px solid var(–line);border-radius:8px;padding:12px 14px;margin-bottom:7px;}
+.j-entry-date{font-size:10px;color:var(–dim);font-weight:500;margin-bottom:4px;}
+.j-entry-text{font-family:‘Cormorant Garamond’,serif;font-size:14px;color:var(–text);line-height:1.6;font-style:italic;}
+
+/* ─── COACH ─── */
+.coach-hero{background:linear-gradient(135deg,#C4A882,#8B6C42);border-radius:12px;padding:16px;text-align:center;margin-bottom:12px;}
+.coach-av{font-size:32px;margin-bottom:5px;}
+.coach-name{font-family:‘Cormorant Garamond’,serif;font-size:18px;font-weight:700;color:white;margin-bottom:2px;}
+.coach-desc{font-size:11px;color:rgba(255,255,255,.7);line-height:1.5;}
+.qp-row{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:11px;}
+.qp{font-size:11px;font-weight:500;padding:5px 11px;border-radius:20px;border:1px solid var(–line);background:var(–white);color:var(–text);cursor:pointer;transition:all .15s;}
+.qp:hover{border-color:var(–brown);color:var(–brown);}
+.chat-wrap{background:var(–white);border:1px solid var(–line);border-radius:10px;overflow:hidden;}
+.chat-msgs{height:260px;overflow-y:auto;padding:13px;display:flex;flex-direction:column;gap:9px;}
+.chat-msgs::-webkit-scrollbar{width:2px;}
+.chat-msgs::-webkit-scrollbar-thumb{background:var(–faint);}
+.msg{display:flex;gap:8px;align-items:flex-end;}
+.msg.user{flex-direction:row-reverse;}
+.bubble{max-width:82%;padding:9px 12px;border-radius:14px;font-size:13px;line-height:1.6;}
+.msg.coach .bubble{background:var(–cream);color:var(–text);border-radius:4px 14px 14px 14px;}
+.msg.user .bubble{background:var(–dark);color:white;border-radius:14px 4px 14px 14px;}
+.av{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;}
+.avc{background:var(–gold-bg);border:1px solid var(–gold);}
+.avu{background:var(–dark);}
+.td{width:5px;height:5px;border-radius:50%;background:var(–faint);animation:bounce 1s infinite;}
+.td:nth-child(2){animation-delay:.2s;}
+.td:nth-child(3){animation-delay:.4s;}
+@keyframes bounce{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-5px)}}
+.chat-row{display:flex;gap:8px;padding:9px;border-top:1px solid var(–line);background:var(–page);}
+.chat-inp{flex:1;background:var(–white);border:1px solid var(–line);border-radius:8px;padding:8px 11px;font-family:‘DM Sans’,sans-serif;font-size:13px;color:var(–dark);outline:none;transition:border-color .15s;resize:none;}
+.chat-inp::placeholder{color:var(–faint);}
+.chat-inp:focus{border-color:var(–brown);}
+.send-btn{width:33px;height:33px;border-radius:8px;background:var(–dark);color:white;border:none;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;flex-shrink:0;align-self:flex-end;}
+.send-btn:hover{opacity:.85;}
+.send-btn:disabled{opacity:.35;cursor:default;}
+
+/* ─── MONEY / DAVE RAMSEY ─── */
+.dr-steps{counter-reset:drstep;margin-bottom:14px;}
+.dr-step{display:flex;gap:12px;padding:11px 0;border-bottom:1px solid var(–line);align-items:flex-start;}
+.dr-step:first-child{border-top:1px solid var(–line);}
+.dr-num{width:26px;height:26px;border-radius:50%;background:var(–dark);color:var(–white);font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;}
+.dr-body{}
+.dr-title{font-size:13px;font-weight:600;color:var(–dark);margin-bottom:2px;}
+.dr-desc{font-size:11px;color:var(–dim);line-height:1.5;}
+.sov-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:9px;margin-bottom:12px;}
+.sov{background:var(–white);border:1px solid var(–line);border-radius:8px;padding:11px 13px;}
+.sov-v{font-family:‘Cormorant Garamond’,serif;font-size:20px;font-weight:700;color:var(–dark);}
+.sov-l{font-size:9px;font-weight:500;letter-spacing:1px;text-transform:uppercase;color:var(–dim);margin-top:3px;}
+.ow-wrap{margin-bottom:12px;}
+.ow-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;}
+.ow-lbl{font-size:12px;font-weight:500;color:var(–text);}
+.ow-pct{font-size:13px;font-weight:700;color:var(–brown);}
+.ow-track{height:6px;background:var(–faint);border-radius:6px;overflow:hidden;}
+.ow-fill{height:100%;background:linear-gradient(90deg,var(–brown),var(–brown2));border-radius:6px;transition:width .6s ease;}
+.ow-sub{font-size:10px;color:var(–dim);margin-top:4px;}
+.debt-item{padding:13px 0;border-bottom:1px solid var(–line);}
+.debt-item:first-child{border-top:1px solid var(–line);}
+.di-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:3px;}
+.di-name{font-size:13px;font-weight:600;color:var(–dark);}
+.di-tag{font-size:9px;font-weight:500;padding:3px 9px;border-radius:20px;}
+.dt-a{background:var(–dark);color:var(–white);}
+.dt-q{background:var(–faint);color:var(–dim);}
+.dt-d{background:var(–sage-bg);color:var(–sage);}
+.di-info{font-size:11px;color:var(–dim);margin-bottom:7px;}
+.di-track{height:3px;background:var(–faint);border-radius:3px;overflow:hidden;margin-bottom:7px;}
+.di-bar{height:100%;border-radius:3px;transition:width .5s ease;}
+.di-foot{display:flex;justify-content:space-between;align-items:center;}
+.di-eta{font-size:11px;color:var(–dim);}
+.paid-btn{font-size:10px;font-weight:500;padding:4px 11px;border-radius:20px;border:1px solid var(–line);background:var(–white);color:var(–dim);cursor:pointer;font-family:‘DM Sans’,sans-serif;transition:all .15s;}
+.paid-btn:hover{border-color:var(–sage);color:var(–sage);}
+.d-row{display:grid;grid-template-columns:2fr 1fr 1fr 1fr 22px;gap:4px;align-items:center;margin-bottom:5px;}
+@media(max-width:480px){.d-row{grid-template-columns:1fr 1fr;gap:4px;}.d-row .d-del{grid-column:2;justify-self:end;}}
+.d-col{font-size:9px;font-weight:500;letter-spacing:1px;text-transform:uppercase;color:var(–dim);}
+.d-inp{background:var(–cream);border:1px solid var(–line);border-radius:6px;padding:7px 8px;font-family:‘DM Sans’,sans-serif;font-size:12px;color:var(–dark);outline:none;width:100%;transition:border-color .15s;}
+.d-inp::placeholder{color:var(–faint);}
+.d-inp:focus{border-color:var(–brown);}
+.d-del{width:20px;height:20px;border-radius:4px;border:1px solid var(–line);background:none;color:var(–faint);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:11px;transition:all .15s;}
+.d-del:hover{border-color:var(–rust);color:var(–rust);}
+.add-row-btn{display:flex;align-items:center;justify-content:center;gap:5px;width:100%;padding:7px;background:none;border:1px dashed var(–line);border-radius:7px;color:var(–dim);font-family:‘DM Sans’,sans-serif;font-size:11px;font-weight:500;cursor:pointer;margin-top:4px;transition:all .15s;}
+.add-row-btn:hover{border-color:var(–brown);color:var(–brown);}
+.extra-row{display:flex;align-items:center;gap:8px;margin-top:11px;padding-top:11px;border-top:1px solid var(–line);}
+.extra-lbl{font-size:12px;color:var(–dim);flex:1;}
+.extra-inp{width:80px;background:var(–cream);border:1px solid var(–line);border-radius:6px;padding:7px 8px;font-family:‘DM Sans’,sans-serif;font-size:12px;color:var(–dark);outline:none;}
+.calc-btn{padding:8px 14px;background:var(–dark);color:var(–white);border:none;border-radius:7px;font-family:‘DM Sans’,sans-serif;font-size:12px;font-weight:500;cursor:pointer;white-space:nowrap;}
+.chart-wrap{height:150px;margin:10px 0;}
+
+/* ─── INTERACTIVE TOUR ─── */
+.tour-overlay{position:fixed;inset:0;z-index:2000;pointer-events:none;}
+.tour-overlay.active{pointer-events:all;}
+.tour-backdrop{position:fixed;inset:0;background:rgba(44,36,22,0);transition:background .3s ease;pointer-events:none;}
+.tour-overlay.active .tour-backdrop{pointer-events:all;}
+.tour-backdrop.dim{background:rgba(44,36,22,.65);}
+.tour-highlight{position:fixed;border-radius:10px;box-shadow:0 0 0 3px var(–brown);pointer-events:none;z-index:2001;display:none;}
+.tour-card{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);width:92%;max-width:360px;background:var(–white);border-radius:16px;padding:20px 20px 18px;box-shadow:0 8px 40px rgba(44,36,22,.3);z-index:2002;pointer-events:all;}
+.tour-step-badge{font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(–brown);margin-bottom:10px;display:flex;align-items:center;gap:8px;}
+.tour-step-dots{display:flex;gap:4px;margin-left:auto;}
+.tour-dot{width:5px;height:5px;border-radius:50%;background:var(–faint);flex-shrink:0;}
+.tour-dot.on{background:var(–brown);width:14px;border-radius:3px;}
+.tour-title{font-family:‘Cormorant Garamond’,serif;font-size:18px;font-weight:700;color:var(–dark);line-height:1.3;}
+.tour-body{font-size:12px;color:var(–dim);line-height:1.65;margin-bottom:16px;}
+.tour-actions{display:flex;gap:8px;align-items:center;}
+.tour-next{background:var(–dark);color:var(–white);border:none;border-radius:8px;padding:11px 20px;font-family:‘DM Sans’,sans-serif;font-size:13px;font-weight:600;cursor:pointer;flex:1;}
+.tour-next:active{opacity:.8;}
+.tour-skip{background:none;border:none;color:var(–dim);font-family:‘DM Sans’,sans-serif;font-size:12px;cursor:pointer;padding:4px 8px;flex-shrink:0;}
+.tour-start-btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:13px;background:linear-gradient(135deg,var(–brown),var(–brown2));color:var(–white);border:none;border-radius:10px;font-family:‘DM Sans’,sans-serif;font-size:13px;font-weight:600;cursor:pointer;margin-top:12px;}
+
+.guide-video{background:var(–dark);border-radius:12px;height:180px;display:flex;align-items:center;justify-content:center;margin-bottom:14px;overflow:hidden;position:relative;}
+.guide-video iframe{width:100%;height:100%;border:none;}
+.guide-video-placeholder{text-align:center;color:rgba(255,255,255,.5);}
+.guide-video-icon{font-size:40px;margin-bottom:8px;}
+.guide-video-text{font-size:12px;line-height:1.5;}
+.guide-step{display:flex;gap:13px;padding:13px 0;border-bottom:1px solid var(–line);align-items:flex-start;}
+.guide-step:last-child{border-bottom:none;}
+.gs-num{width:28px;height:28px;border-radius:50%;background:var(–dark);color:var(–white);font-family:‘Cormorant Garamond’,serif;font-size:14px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;}
+.gs-title{font-size:13px;font-weight:600;color:var(–dark);margin-bottom:3px;}
+.gs-desc{font-size:12px;color:var(–dim);line-height:1.55;}
+.gs-action{display:inline-block;margin-top:6px;padding:4px 11px;background:var(–brown-bg);border:1px solid #DDD0BC;border-radius:20px;font-size:11px;font-weight:500;color:var(–brown);cursor:pointer;transition:all .15s;}
+.gs-action:hover{background:var(–brown);color:var(–white);}
+.cal-add-btn{display:inline-flex;align-items:center;gap:5px;background:var(–brown-bg);border:1px solid var(–line);border-radius:8px;padding:6px 12px;font-family:‘DM Sans’,sans-serif;font-size:11px;font-weight:600;color:var(–brown);cursor:pointer;transition:all .15s;}
+.cal-add-btn:hover{background:var(–brown);color:white;}
+.task-del-btn{background:none;border:none;color:var(–faint);font-size:13px;cursor:pointer;padding:0 4px;flex-shrink:0;transition:color .15s;}
+.task-del-btn:hover{color:var(–rust);}
+</style>
+
+</head>
+<body>
+
+<!-- SETUP -->
+
+<div class="setup-modal" id="setup">
+  <div class="setup-card">
+    <!-- Emergency escape — only visible if something goes wrong -->
+    <button onclick="forceSkipSetup()" title="Skip setup" style="position:absolute;top:14px;right:16px;background:none;border:none;color:var(--faint);font-size:18px;cursor:pointer;line-height:1;" onmouseover="this.style.color='var(--dim)'" onmouseout="this.style.color='var(--faint)'">✕</button>
+    <div class="setup-logo">Clear Mind Co.</div>
+    <div class="setup-tag">FOCUS MODE — ADHD Life System</div>
+    <div class="setup-dots">
+      <div class="sdot on" id="sd0"></div>
+      <div class="sdot" id="sd1"></div><div class="sdot" id="sd2"></div>
+      <div class="sdot" id="sd3"></div><div class="sdot" id="sd4"></div>
+      <div class="sdot" id="sd5"></div>
+    </div>
+
+```
+<!-- STEP 0: Neutral, confident welcome -->
+<div class="ss on" id="s0">
+  <div style="background:var(--dark);border-radius:12px;padding:18px 16px;margin-bottom:14px;text-align:center;">
+    <div style="font-size:22px;margin-bottom:8px;">✦</div>
+    <div style="font-family:'Cormorant Garamond',serif;font-size:19px;font-weight:700;color:white;line-height:1.35;margin-bottom:8px;">This is the system that moves with you — not against you.</div>
+    <div style="font-size:12px;color:rgba(255,255,255,.65);line-height:1.6;">Whatever you're working on, wherever you're starting from — built to help you get clear, stay focused, and actually follow through.</div>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:14px;">
+    <div style="display:flex;align-items:center;gap:10px;background:var(--cream);border-radius:8px;padding:10px 12px;">
+      <div style="font-size:13px;flex-shrink:0;">✦</div>
+      <div style="font-size:12px;color:var(--text);line-height:1.4;"><strong style="color:var(--dark)">Built around your brain</strong> — dopamine rewards and one clear next step</div>
+    </div>
+    <div style="display:flex;align-items:center;gap:10px;background:var(--cream);border-radius:8px;padding:10px 12px;">
+      <div style="font-size:13px;flex-shrink:0;">✦</div>
+      <div style="font-size:12px;color:var(--text);line-height:1.4;"><strong style="color:var(--dark)">Personalized to you</strong> — 2-minute setup, then the system knows your goal</div>
+    </div>
+    <div style="display:flex;align-items:center;gap:10px;background:var(--cream);border-radius:8px;padding:10px 12px;">
+      <div style="font-size:13px;flex-shrink:0;">✦</div>
+      <div style="font-size:12px;color:var(--text);line-height:1.4;"><strong style="color:var(--dark)">A coach in your corner</strong> — when you hit a wall, it helps you push through</div>
+    </div>
+  </div>
+  <button class="snext" onclick="goStep(1)">Let's get started →</button>
+</div>
+
+<div class="ss" id="s1">
+  <div class="sq">What's your name?</div>
+  <div class="sh">This system is built around you. Let's start there.</div>
+  <input class="si" id="sName" placeholder="Your first name" maxlength="30" onkeydown="if(event.key==='Enter')goStep(2)">
+  <button class="snext" onclick="goStep(2)">Continue →</button>
+  <button class="sback" onclick="goStep(0)">← Back</button>
+</div>
+
+<div class="ss" id="s2">
+  <div class="sq">What's your #1 goal right now?</div>
+  <div class="sh">Be specific. "Start my business" is stronger than "be successful." Your system will build around this.</div>
+  <input class="si" id="sGoal" placeholder="What are you working toward?">
+  <div class="sq" style="font-size:17px;margin-top:2px">Why does it matter?</div>
+  <div class="sh">One honest sentence. This is your fuel when motivation drops.</div>
+  <textarea class="sta" id="sWhy" placeholder="What changes in your life when you hit this goal?"></textarea>
+  <button class="snext" onclick="goStep(3)">Continue →</button>
+  <button class="sback" onclick="goStep(1)">← Back</button>
+</div>
+
+<div class="ss" id="s3">
+  <div class="sq">What holds you back?</div>
+  <div class="sh" id="selCount">Select all that apply — your coach adapts to these.</div>
+  <div class="c-opts">
+    <div class="c-opt" onclick="togC(this,'Procrastination')">Procrastination</div>
+    <div class="c-opt" onclick="togC(this,'Overwhelm')">Overwhelm — too much at once</div>
+    <div class="c-opt" onclick="togC(this,'Self-doubt')">Self-doubt — I talk myself out of things</div>
+    <div class="c-opt" onclick="togC(this,'ADHD / Distraction')">ADHD / Distraction</div>
+    <div class="c-opt" onclick="togC(this,'Consistency')">Consistency — I go hard then fall off</div>
+  </div>
+  <button class="snext" onclick="goStep(4)">Continue →</button>
+  <button class="sback" onclick="goStep(2)">← Back</button>
+</div>
+
+<div class="ss" id="s4">
+  <div class="sq">How hard do you want to be pushed?</div>
+  <div class="sh">Your coach will match this every single day.</div>
+  <div class="push-row">
+    <div class="push-opt" onclick="selPush(this,'gentle')">Gentle<br><span style="font-size:10px;color:var(--dim)">Warm &amp; encouraging</span></div>
+    <div class="push-opt sel" onclick="selPush(this,'medium')">Medium<br><span style="font-size:10px">Direct &amp; energized</span></div>
+    <div class="push-opt" onclick="selPush(this,'hard')">Hard Mode<br><span style="font-size:10px;color:var(--dim)">No excuses</span></div>
+  </div>
+  <button class="snext" onclick="goStep(5)">Continue →</button>
+  <button class="sback" onclick="goStep(3)">← Back</button>
+</div>
+
+<div class="ss" id="s5">
+  <div class="sq">Choose your growth journey</div>
+  <div class="sh">As you complete tasks and habits, you'll watch this grow. Pick what speaks to you.</div>
+  <div class="growth-opts">
+    <div class="growth-opt sel" id="go-flower" onclick="selGrowth('flower')">
+      <div class="growth-opt-icon">🌸</div>
+      <div class="growth-opt-name">Flower Garden</div>
+      <div class="growth-opt-sub">Plant grows as you do</div>
+    </div>
+    <div class="growth-opt" id="go-knight" onclick="selGrowth('knight')">
+      <div class="growth-opt-icon">⚔️</div>
+      <div class="growth-opt-name">Knight's Quest</div>
+      <div class="growth-opt-sub">Warrior levels up with you</div>
+    </div>
+  </div>
+  <button class="snext" onclick="finishSetup()">Build My System →</button>
+  <button class="sback" onclick="goStep(4)">← Back</button>
+</div>
+```
+
+  </div>
+</div>
+
+<!-- WEEK MODAL -->
+
+<div class="cal-modal" id="weekModal">
+  <div class="cal-card">
+    <div class="cal-header">
+      <div class="cal-month" id="weekTitle">This Week</div>
+      <button class="cal-close" onclick="closeWeek()">✕</button>
+    </div>
+    <div style="font-size:11px;color:var(--dim);margin-bottom:14px;line-height:1.5;">Set a goal or intention for each day. Tap any field and start typing — it saves automatically.</div>
+    <div id="weekGrid"></div>
+  </div>
+</div>
+
+<!-- CALENDAR MODAL -->
+
+<div class="cal-modal" id="calModal">
+  <div class="cal-card">
+    <div class="cal-header">
+      <button class="cal-nav" onclick="calNav(-1)">‹</button>
+      <div class="cal-month" id="calTitle"></div>
+      <button class="cal-nav" onclick="calNav(1)">›</button>
+      <button class="cal-close" onclick="closeCal()">✕</button>
+    </div>
+    <div class="cal-grid" id="calGrid"></div>
+    <div class="cal-entry-area" id="calEntryArea" style="display:none">
+      <div class="cal-entry-title" id="calEntryTitle"></div>
+      <input class="cal-inp" id="calGoalInp" placeholder="What's your goal or intention for this day?">
+      <input class="cal-inp" id="calNoteInp" placeholder="Any notes? (optional)">
+      <button class="cal-save" onclick="saveCalEntry()">Save →</button>
+    </div>
+  </div>
+</div>
+
+<!-- CELEBRATION -->
+
+<div class="overlay" id="overlay">
+  <div class="cel">
+    <span class="cel-emoji" id="celE">✨</span>
+    <div class="cel-title" id="celT">You did it.</div>
+    <div class="cel-msg" id="celM">One more win.</div>
+    <div class="cel-reward"><div class="cel-lbl">Your Reward</div><div class="cel-val" id="celR">Take this moment.</div></div>
+    <button class="cel-btn" onclick="document.getElementById('overlay').classList.remove('show')">Keep Going →</button>
+  </div>
+</div>
+
+<!-- APP -->
+
+<div class="app">
+  <div class="topbar">
+    <div class="topbar-row1">
+      <div class="tb-brand">Clear Mind Co.</div>
+      <div class="tb-tab on" id="tt-today" onclick="swTab('today')">Today</div>
+      <div class="tb-tab" id="tt-week" onclick="swTab('week')">Week</div>
+      <div class="tb-tab" id="tt-month" onclick="swTab('month');openCal()">Month</div>
+      <button class="tb-coach" onclick="goPage('coach','pn-coach')">Coach</button>
+    </div>
+    <div class="page-nav">
+      <div class="pn on" id="pn-home" onclick="goPage('home','pn-home')">Home</div>
+      <div class="pn" id="pn-tasks" onclick="goPage('tasks','pn-tasks')">Planner</div>
+      <div class="pn" id="pn-goals" onclick="goPage('goals','pn-goals')">Goals</div>
+      <div class="pn" id="pn-focus" onclick="goPage('focus','pn-focus')">Focus</div>
+      <div class="pn" id="pn-habits" onclick="goPage('habits','pn-habits')">Habits</div>
+      <div class="pn" id="pn-journal" onclick="goPage('journal','pn-journal')">Journal</div>
+      <div class="pn" id="pn-money" onclick="goPage('money','pn-money')">Money</div>
+      <div class="pn" id="pn-guide" onclick="goPage('guide','pn-guide')">Guide</div>
+      <!-- Theme toggle lives here so it never competes for top-bar space -->
+      <div onclick="toggleDark()" id="themeToggle" title="Switch theme" style="display:flex;align-items:center;margin-left:auto;margin-right:6px;background:var(--cream);border:1.5px solid var(--line);border-radius:20px;overflow:hidden;cursor:pointer;flex-shrink:0;align-self:center;">
+        <div id="lightPill" style="padding:3px 9px;font-size:10px;font-weight:600;background:var(--dark);color:var(--white);border-radius:20px;transition:all .2s;">Light</div>
+        <div id="darkPill" style="padding:3px 9px;font-size:10px;font-weight:600;color:var(--dim);border-radius:20px;transition:all .2s;">Dark</div>
+      </div>
+      <button id="installBtn" onclick="installApp()" title="Install app" style="display:none;height:26px;padding:0 10px;border-radius:14px;border:1px solid var(--brown);background:var(--brown-bg);cursor:pointer;font-size:10px;font-weight:600;color:var(--brown);margin-right:6px;align-self:center;flex-shrink:0;">Install</button>
+    </div>
+  </div>
+
+  <div class="cover">
+    <div class="c-eye">Clear Mind Co.</div>
+    <div class="c-greeting" id="greeting">Good morning.</div>
+    <div class="c-date" id="coverDate"></div>
+  </div>
+
+  <div class="scroll">
+
+```
+<!-- HOME -->
+<div class="pg on" id="pg-home">
+  <!-- New user prompt - shown until dismissed -->
+  <div id="newUserBanner" style="display:none;background:var(--dark);border-radius:10px;padding:14px 16px;margin-bottom:14px;display:flex;align-items:center;justify-content:space-between;gap:12px;">
+    <div>
+      <div style="font-size:12px;font-weight:600;color:white;margin-bottom:2px">New here? Start with the Guide</div>
+      <div style="font-size:11px;color:rgba(255,255,255,.5)">5 minutes — learn the daily system</div>
+    </div>
+    <div style="display:flex;gap:8px;align-items:center;">
+      <button onclick="goPage('guide','pn-guide')" style="padding:6px 14px;background:var(--brown);color:white;border:none;border-radius:6px;font-family:'DM Sans',sans-serif;font-size:11px;font-weight:500;cursor:pointer;">View Guide</button>
+      <button onclick="dismissBanner()" style="background:none;border:none;color:rgba(255,255,255,.4);cursor:pointer;font-size:16px;padding:0 2px;">✕</button>
+    </div>
+  </div>
+
+  <div class="quote-card">
+    <div class="q-mark">"</div>
+    <div class="q-text" id="qText"> </div>
+    <div class="q-author" id="qAuthor"></div>
+  </div>
+
+  <div class="slbl">Your one focus right now</div>
+  <div class="focus-card">
+    <div class="fc-lbl">Most Important Task Today</div>
+    <div class="fc-task" id="fcTask">Add your first task in the Planner — it will appear here.</div>
+    <div class="fc-btn" id="fcBtn" onclick="completeOne()">
+      <span id="fcIcon">○</span>&nbsp;&nbsp;<span class="fc-btn-text" id="fcText">Mark it done</span>
+    </div>
+  </div>
+
+  <div class="stats">
+    <div class="stat"><div class="stat-v" id="stT">—</div><div class="stat-l">Tasks Left</div><div class="stat-bar"><div class="stat-bf" id="stTB" style="width:0%"></div></div></div>
+    <div class="stat"><div class="stat-v" id="stH">0/0</div><div class="stat-l">Habits Done</div><div class="stat-bar"><div class="stat-bf" id="stHB" style="width:0%"></div></div></div>
+    <div class="stat"><div class="stat-v" id="stStreak">0</div><div class="stat-l">Day Streak 🔥</div><div class="stat-bar"><div class="stat-bf" id="stStreakB" style="width:20%"></div></div></div>
+  </div>
+
+  <!-- GROWTH GAME — dopamine reward system -->
+  <div class="growth-widget" id="growthWidget">
+    <div class="gw-header">
+      <div class="gw-title" id="gwTitle">Dopamine Reward System</div>
+      <div class="gw-level" id="gwLevel">Stage 1</div>
+    </div>
+    <div class="gw-scene" id="gwScene"></div>
+    <div class="gw-progress"><div class="gw-progress-fill" id="gwFill" style="width:5%"></div></div>
+    <div class="gw-status" id="gwStatus">Every task gives your brain a dopamine hit. Watch it grow.</div>
+  </div>
+
+  <!-- QUICK ACTIONS — clear next steps, no scrolling needed -->
+  <div class="slbl">Where to next?</div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px;">
+    <button onclick="goPage('tasks','pn-tasks')" style="background:var(--white);border:1.5px solid var(--line);border-radius:12px;padding:14px;font-family:'DM Sans',sans-serif;font-size:12px;color:var(--text);cursor:pointer;text-align:left;transition:all .15s;" onmouseover="this.style.borderColor='var(--brown)';this.style.background='var(--brown-bg)'" onmouseout="this.style.borderColor='var(--line)';this.style.background='var(--white)'">
+      <div style="font-weight:700;color:var(--dark);margin-bottom:3px;font-size:13px">Add Today's Tasks</div>
+      <div style="font-size:10px;color:var(--dim)">Set your Must Do first</div>
+    </button>
+    <button onclick="goPage('focus','pn-focus')" style="background:var(--white);border:1.5px solid var(--line);border-radius:12px;padding:14px;font-family:'DM Sans',sans-serif;font-size:12px;color:var(--text);cursor:pointer;text-align:left;transition:all .15s;" onmouseover="this.style.borderColor='var(--brown)';this.style.background='var(--brown-bg)'" onmouseout="this.style.borderColor='var(--line)';this.style.background='var(--white)'">
+      <div style="font-weight:700;color:var(--dark);margin-bottom:3px;font-size:13px">Start Focus Timer</div>
+      <div style="font-size:10px;color:var(--dim)">25 min deep work</div>
+    </button>
+    <button onclick="goPage('habits','pn-habits')" style="background:var(--white);border:1.5px solid var(--line);border-radius:12px;padding:14px;font-family:'DM Sans',sans-serif;font-size:12px;color:var(--text);cursor:pointer;text-align:left;transition:all .15s;" onmouseover="this.style.borderColor='var(--brown)';this.style.background='var(--brown-bg)'" onmouseout="this.style.borderColor='var(--line)';this.style.background='var(--white)'">
+      <div style="font-weight:700;color:var(--dark);margin-bottom:3px;font-size:13px">Log Habits</div>
+      <div style="font-size:10px;color:var(--dim)">Build your streak</div>
+    </button>
+    <button onclick="goPage('coach','pn-coach')" style="background:var(--dark);border:1.5px solid var(--dark);border-radius:12px;padding:14px;font-family:'DM Sans',sans-serif;font-size:12px;color:white;cursor:pointer;text-align:left;transition:opacity .15s;" onmouseover="this.style.opacity='.85'" onmouseout="this.style.opacity='1'">
+      <div style="font-weight:700;margin-bottom:3px;font-size:13px">Talk to Coach</div>
+      <div style="font-size:10px;color:rgba(255,255,255,.5)">Stuck? Start here</div>
+    </button>
+  </div>
+
+  <!-- Brain dump - collapsed by default, clean expand -->
+  <div class="slbl">Brain dump</div>
+  <div class="card">
+    <div style="display:flex;align-items:center;justify-content:space-between;cursor:pointer;" onclick="toggleDump()">
+      <div>
+        <div class="card-title" style="margin-bottom:2px">Clear Your Head</div>
+        <div style="font-size:11px;color:var(--dim)">Dump everything, let AI sort it by priority</div>
+      </div>
+      <div id="dumpToggleIcon" style="font-size:18px;color:var(--dim);transition:transform .2s;">+</div>
+    </div>
+    <div id="dumpExpanded" style="display:none;margin-top:14px;border-top:1px solid var(--line);padding-top:14px;">
+      <div style="font-size:11px;color:var(--dim);margin-bottom:10px;line-height:1.55">Dump everything on your mind. Then tap Organize — the AI will sort it by priority with steps for each item, turning chaos into a clear checklist.</div>
+      <textarea class="dump-area" id="dumpText" placeholder="Everything on your mind right now. Worries, tasks, ideas, random thoughts — all of it. Don't organize. Just let it out."></textarea>
+      <button class="organize-btn" id="organizeBtn" onclick="organizeDump()">Organize by Priority ✦</button>
+      <div class="organized-result" id="organizedResult"></div>
+    </div>
+  </div>
+</div>
+
+<!-- PLANNER -->
+<div class="pg" id="pg-tasks">
+  <div class="card">
+    <div class="mit-explain">
+      <div class="mit-explain-title">What is a "Most Important Task" (MIT)?</div>
+      <div class="mit-explain-body">Your MIT is the <strong>ONE thing</strong> your future self will thank you for doing today. Not three things. Not a list. <em>One thing.</em><br><br>Mark it <strong>Must Do</strong> and do it before email, before social media, before anything else. If you do nothing else today — do this. That's a win.</div>
+    </div>
+    <div class="card-title">Today's Planner</div>
+    <div class="card-sub" style="margin-bottom:10px;">Add up to 3 tasks. Do the <span style="color:var(--rust);font-weight:600">Must Do</span> first — everything else is a bonus.</div>
+    <div style="display:flex;gap:7px;margin-bottom:10px;">
+      <button class="cal-add-btn" onclick="addTasksToCalendar()">📅 Add to Calendar</button>
+      <button class="cal-add-btn" onclick="window.print()">Print Plan</button>
+    </div>
+    <div id="taskList"><div style="padding:14px 0;text-align:center;color:var(--dim);font-size:12px">No tasks yet. Add one below.</div></div>
+    <div class="add-task-row">
+      <input class="task-inp" id="taskInp" placeholder="What's the task?" onkeydown="if(event.key==='Enter')addTask()">
+      <select class="pri-sel" id="taskPri">
+        <option value="must">Must Do</option>
+        <option value="should" selected>Should Do</option>
+        <option value="bonus">Bonus</option>
+      </select>
+      <button class="add-task-btn" onclick="addTask()">Add</button>
+    </div>
+  </div>
+</div>
+
+<!-- GOALS -->
+<div class="pg" id="pg-goals">
+  <div class="card">
+    <div class="card-title">Your Goals</div>
+    <div class="card-sub">Your real goals — not placeholders. Drag the slider to update progress.</div>
+    <div id="goalList"><div style="padding:14px 0;text-align:center;color:var(--dim);font-size:12px">No goals yet. Add one below.</div></div>
+    <div style="padding-top:13px;border-top:1px solid var(--line);margin-top:4px">
+      <div class="r-item"><div class="r-lbl">Goal:</div><input class="r-inp" id="gName" placeholder="What are you building toward?"></div>
+      <div class="r-item"><div class="r-lbl">Why it matters:</div><input class="r-inp" id="gWhy" placeholder="Your fuel when motivation dips"></div>
+      <div style="display:flex;gap:8px">
+        <div style="flex:1"><div class="r-lbl">Category:</div><select class="r-inp" id="gCat" style="cursor:pointer"><option>Business</option><option>Health</option><option>Money</option><option>Personal</option><option>Relationships</option><option>Content</option></select></div>
+        <div style="flex:1"><div class="r-lbl">Target date:</div><input class="r-inp" id="gDate" type="date"></div>
+      </div>
+      <button class="action-btn" onclick="addGoal()">Add This Goal →</button>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-title">Daily Alignment</div>
+    <div class="card-sub">Three questions. Answer honestly. This is what keeps you on track.</div>
+    <div class="r-item"><div class="r-lbl">Did today move me closer to my goals?</div><input class="r-inp" placeholder="Be honest."></div>
+    <div class="r-item"><div class="r-lbl">My biggest win today was:</div><input class="r-inp" placeholder="Even small wins count."></div>
+    <div class="r-item"><div class="r-lbl">Tomorrow I will:</div><input class="r-inp" placeholder="One clear intention."></div>
+    <button class="win-btn" onclick="cel('🏆','Win logged.','Every win matters. You\'re building evidence that you can do this.','Share it with someone who\'ll celebrate with you.')">Log a win</button>
+  </div>
+</div>
+
+<!-- FOCUS -->
+<div class="pg" id="pg-focus">
+  <div class="card">
+    <div class="card-title">Focus Session</div>
+    <div class="card-sub">25 minutes. One task. No distractions. The focus comes after you start — not before. Press go.</div>
+    <div id="focusTaskDisplay" style="display:none;background:var(--brown-bg);border:1px solid #DDD0BC;border-radius:8px;padding:10px 14px;margin-bottom:12px;">
+      <div style="font-size:9px;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;color:var(--brown);margin-bottom:3px">Working on</div>
+      <div style="font-size:13px;font-weight:600;color:var(--dark)" id="focusTaskName">—</div>
+    </div>
+    <div class="pomo">
+      <div class="pomo-lbl">Pomodoro Timer — 25 min deep work</div>
+      <div class="pomo-time" id="pomTime">25:00</div>
+      <div class="pomo-phase" id="pomPhase">Ready when you are</div>
+      <div class="pomo-btns">
+        <button class="pb pb-go" id="pomBtn" onclick="togglePomo()">Start</button>
+        <button class="pb pb-rst" onclick="resetPomo()">Reset</button>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-title">Task Breaker</div>
+    <div class="card-sub">One big scary task → 5 steps you can actually start. Focus only on Step 1 right now.</div>
+    <div class="r-item"><div class="r-lbl">The task I'm avoiding:</div><input class="r-inp" placeholder="Name it. That alone takes away half the fear."></div>
+    <div class="step-row"><div class="step-n">1</div><input class="s-inp" placeholder="First tiny step — 5 minutes or less..."></div>
+    <div class="step-row"><div class="step-n">2</div><input class="s-inp" placeholder="Second step..."></div>
+    <div class="step-row"><div class="step-n">3</div><input class="s-inp" placeholder="Third step..."></div>
+    <div class="step-row"><div class="step-n">4</div><input class="s-inp" placeholder="Fourth step..."></div>
+    <div class="step-row"><div class="step-n">5</div><input class="s-inp" placeholder="Final step — the finish line"></div>
+  </div>
+</div>
+
+<!-- HABITS — with add/remove -->
+<div class="pg" id="pg-habits">
+  <div class="card">
+    <div class="card-title">Today's Habits</div>
+    <div class="card-sub">Tap to check off. Add your own habits below. Missed a day? No shame — just start again.</div>
+    <div id="habitList"></div>
+    <div class="add-habit-row">
+      <input class="habit-inp" id="habitInp" placeholder="Add your own habit..." onkeydown="if(event.key==='Enter')addHabit()">
+      <button class="add-habit-btn" onclick="addHabit()">Add</button>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-title">Today's Mood</div>
+    <div class="card-sub">No judgment. Just awareness.</div>
+    <div class="mood-row">
+      <div class="mood-opt" onclick="setMood(this,'Rough day. Be extra gentle with yourself.')">😭</div>
+      <div class="mood-opt" onclick="setMood(this,'Feeling low. You\'re still showing up — that counts.')">😔</div>
+      <div class="mood-opt" onclick="setMood(this,'Steady. Neutral is a solid foundation.')">😐</div>
+      <div class="mood-opt" onclick="setMood(this,'Feeling good. Build on this.')">🙂</div>
+      <div class="mood-opt" onclick="setMood(this,'Full energy. Make the most of today.')">😄</div>
+    </div>
+    <div class="mood-lbl" id="moodLbl">How are you feeling right now? Tap one above.</div>
+  </div>
+</div>
+
+<!-- JOURNAL -->
+<div class="pg" id="pg-journal">
+  <div class="card">
+    <div class="card-title">My Journal</div>
+    <div class="card-sub" id="jDate"></div>
+    <div style="display:flex;align-items:center;gap:8px;background:var(--cream);border:1px solid var(--line);border-radius:8px;padding:9px 12px;margin-bottom:12px;">
+      <div style="font-size:13px;flex-shrink:0;">🔒</div>
+      <div style="font-size:11px;color:var(--dim);">Your entries are stored only on your device. No one else can see them — ever.</div>
+    </div>
+    <div class="slbl">Start with a prompt</div>
+    <div id="jpRow"></div>
+    <textarea class="j-area" id="jInput" placeholder="Start writing. No judgment. No editing. Just you and your thoughts..."></textarea>
+    <button class="save-btn" onclick="saveJ()">Save Entry →</button>
+  </div>
+  <div id="jEntriesWrap" style="display:none">
+    <div class="slbl" style="margin-top:14px">Previous entries</div>
+    <div id="jEntries"></div>
+  </div>
+</div>
+
+<!-- COACH -->
+<div class="pg" id="pg-coach">
+  <div class="coach-hero">
+    <div class="coach-av">✨</div>
+    <div class="coach-name" id="coachName">Your Clear Mind Coach</div>
+    <div class="coach-desc" id="coachDesc">Not a generic chatbot. A coach that knows your name, your goal, your challenges — and talks to you like a real person who gets it.</div>
+    <div style="display:flex;flex-wrap:wrap;gap:5px;justify-content:center;margin-top:10px;">
+      <span style="background:rgba(255,255,255,.15);color:white;font-size:10px;font-weight:600;padding:4px 11px;border-radius:20px;">Knows your goal</span>
+      <span style="background:rgba(255,255,255,.15);color:white;font-size:10px;font-weight:600;padding:4px 11px;border-radius:20px;">Adapts to your style</span>
+      <span style="background:rgba(255,255,255,.15);color:white;font-size:10px;font-weight:600;padding:4px 11px;border-radius:20px;">No judgment</span>
+    </div>
+  </div>
+  <div class="slbl">Quick starts</div>
+  <div class="qp-row" id="qpRow">
+    <div class="qp" onclick="sendQ(this.textContent)">I'm stuck and overwhelmed</div>
+    <div class="qp" onclick="sendQ(this.textContent)">Help me plan my next 3 moves</div>
+    <div class="qp" onclick="sendQ(this.textContent)">I need a push to keep going</div>
+    <div class="qp" onclick="sendQ(this.textContent)">I'm doubting myself today</div>
+    <div class="qp" onclick="sendQ(this.textContent)">I keep procrastinating</div>
+  </div>
+  <div class="chat-wrap">
+    <div class="chat-msgs" id="chatMsgs">
+      <div class="msg coach"><div class="av avc">✨</div><div class="bubble" id="openMsg">Hey. I'm your Clear Mind Coach. Tell me what's going on right now — let's figure out your next move.</div></div>
+    </div>
+    <div class="chat-row">
+      <textarea class="chat-inp" id="chatInp" placeholder="Tell me what you're going through..." rows="1" onkeydown="handleKey(event)"></textarea>
+      <button class="send-btn" id="sendBtn" onclick="sendMsg()">→</button>
+    </div>
+  </div>
+
+  <!-- Privacy notice -->
+  <div style="display:flex;align-items:flex-start;gap:10px;background:var(--cream);border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin-top:10px;">
+    <div style="font-size:16px;flex-shrink:0;margin-top:1px;">🔒</div>
+    <div>
+      <div style="font-size:11px;font-weight:600;color:var(--dark);margin-bottom:3px;">Your conversations are completely private</div>
+      <div style="font-size:11px;color:var(--dim);line-height:1.55;">Everything you type here stays on your device only. Nothing is sent to Clear Mind Co., shared with anyone, or stored on any server. This is your space.</div>
+    </div>
+  </div>
+</div>
+
+<!-- MONEY — Dave Ramsey style -->
+<div class="pg" id="pg-money">
+  <div class="card">
+    <div class="card-title">The Dave Ramsey Snowball Method</div>
+    <div class="card-sub">This is the proven system. Follow the steps in order. Don't skip ahead.</div>
+    <div class="dr-steps">
+      <div class="dr-step"><div class="dr-num">1</div><div class="dr-body"><div class="dr-title">List every debt — smallest to largest</div><div class="dr-desc">Not by interest rate. By balance. The smallest debt gets attacked first regardless of rate.</div></div></div>
+      <div class="dr-step"><div class="dr-num">2</div><div class="dr-body"><div class="dr-title">Pay minimums on everything</div><div class="dr-desc">Keep all other debts current. Never miss a minimum payment.</div></div></div>
+      <div class="dr-step"><div class="dr-num">3</div><div class="dr-body"><div class="dr-title">Attack the smallest debt with every extra dollar</div><div class="dr-desc">Every single extra dollar goes at the smallest balance. Nothing else.</div></div></div>
+      <div class="dr-step"><div class="dr-num">4</div><div class="dr-body"><div class="dr-title">When it's paid — roll that payment into the next</div><div class="dr-desc">Take the full amount you were paying and add it to the minimum of the next debt. The snowball grows.</div></div></div>
+      <div class="dr-step"><div class="dr-num">5</div><div class="dr-body"><div class="dr-title">Repeat until debt free</div><div class="dr-desc">By the end you're throwing huge payments at your largest debt. The math becomes dramatic and the momentum is real.</div></div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Your Debt Snowball Calculator</div>
+    <div class="card-sub">Enter your debts below. We'll sort them smallest to largest automatically and show your exact payoff timeline.</div>
+    <div style="display:flex;align-items:center;gap:8px;background:var(--cream);border:1px solid var(--line);border-radius:8px;padding:9px 12px;margin-bottom:12px;">
+      <div style="font-size:13px;flex-shrink:0;">🔒</div>
+      <div style="font-size:11px;color:var(--dim);">Your financial information is stored only on your device. It is never sent to any server or shared with anyone.</div>
+    </div>
+    <div id="debtResults" style="display:none">
+      <div class="ow-wrap"><div class="ow-top"><span class="ow-lbl">Debt Freedom Progress</span><span class="ow-pct" id="owPct">0%</span></div><div class="ow-track"><div class="ow-fill" id="owFill" style="width:0%"></div></div><div class="ow-sub" id="owSub"></div></div>
+      <div class="sov-row"><div class="sov"><div class="sov-v" id="sovT">—</div><div class="sov-l">Total Debt</div></div><div class="sov"><div class="sov-v" id="sovF">—</div><div class="sov-l">Debt Free In</div></div><div class="sov"><div class="sov-v" id="sovS">—</div><div class="sov-l">Interest Saved</div></div></div>
+      <div id="debtList"></div>
+      <div class="slbl" style="margin-top:11px">Balance over time</div>
+      <div class="chart-wrap"><canvas id="debtChart"></canvas></div>
+    </div>
+    <div class="d-row" style="padding-bottom:5px;border-bottom:1px solid var(--line);margin-bottom:7px;">
+      <div class="d-col">Debt Name</div><div class="d-col">Balance</div><div class="d-col">Min. Pay</div><div class="d-col">Interest %</div><div></div>
+    </div>
+    <div id="debtInputRows"></div>
+    <button class="add-row-btn" onclick="addDebtRow()">＋ Add a debt</button>
+    <div class="extra-row">
+      <span class="extra-lbl">Extra I can pay monthly:</span>
+      <input class="extra-inp" type="number" id="extraPay" placeholder="$0" min="0">
+      <button class="calc-btn" onclick="calcDebt()">Calculate</button>
+    </div>
+  </div>
+</div>
+
+<!-- GUIDE / TUTORIAL -->
+<div class="pg" id="pg-guide">
+  <!-- Emotional hook card -->
+  <div class="card" style="background:var(--dark);border-color:var(--dark);">
+    <div style="font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:700;color:white;line-height:1.35;margin-bottom:10px;">A system that gets out of your way and lets you actually get things done.</div>
+    <div style="font-size:12px;color:rgba(255,255,255,.65);line-height:1.7;margin-bottom:14px;">Clear Mind Co. is built around how your brain actually works — one clear focus at a time, momentum that builds on itself, and a coach that cuts through the noise when you need it most.</div>
+    <div style="display:flex;flex-wrap:wrap;gap:6px;">
+      <span class="dopamine-badge">Dopamine reward loops</span>
+      <span class="dopamine-badge">AI coach built in</span>
+      <span class="dopamine-badge">Momentum-first design</span>
+      <span class="dopamine-badge">No shame, ever</span>
+    </div>
+  </div>
+
+  <!-- Multi-device + export card -->
+  <div class="card">
+    <div class="card-title">Using on multiple devices</div>
+    <div class="card-sub">Your data lives on whichever device you're using. To use it on another device, export it here and import it there.</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px;">
+      <button onclick="exportData()" style="background:var(--dark);color:var(--white);border:none;border-radius:10px;padding:13px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;cursor:pointer;text-align:left;transition:opacity .15s;" onmouseover="this.style.opacity='.85'" onmouseout="this.style.opacity='1'">
+        <div style="font-weight:700;margin-bottom:2px">Export My Data</div>
+        <div style="font-size:10px;color:rgba(255,255,255,.5)">Save a backup file</div>
+      </button>
+      <button onclick="importData()" style="background:var(--white);border:1.5px solid var(--line);border-radius:10px;padding:13px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;color:var(--text);cursor:pointer;text-align:left;transition:all .15s;" onmouseover="this.style.borderColor='var(--brown)'" onmouseout="this.style.borderColor='var(--line)'">
+        <div style="font-weight:700;color:var(--dark);margin-bottom:2px">Import Data</div>
+        <div style="font-size:10px;color:var(--dim)">Restore or transfer</div>
+      </button>
+    </div>
+    <input type="file" id="importFile" accept=".json" style="display:none" onchange="handleImport(event)">
+    <div style="background:var(--cream);border:1px solid var(--line);border-radius:8px;padding:11px 13px;">
+      <div style="font-size:11px;font-weight:600;color:var(--dark);margin-bottom:4px">How to move to a new device</div>
+      <div style="font-size:11px;color:var(--dim);line-height:1.6;">1. On your current device — tap <strong>Export My Data</strong> and save the file<br>2. Transfer that file to your new device (email it to yourself, AirDrop, etc.)<br>3. Open Clear Mind Co. on the new device — tap <strong>Import Data</strong> and select the file<br>4. All your goals, tasks, habits, streaks, and journal entries restore instantly</div>
+    </div>
+  </div>
+
+  <!-- Install to home screen card -->
+  <div class="card">
+    <div class="card-title">Install on your phone or computer</div>
+    <div class="card-sub">Add Clear Mind Co. to your home screen so it opens like a real app — no browser needed.</div>
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <div style="display:flex;gap:12px;align-items:flex-start;padding:11px 0;border-bottom:1px solid var(--line);">
+        <div style="width:28px;height:28px;border-radius:6px;background:var(--dark);display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;color:white;">📱</div>
+        <div><div style="font-size:12px;font-weight:600;color:var(--dark);margin-bottom:2px">iPhone / iPad</div><div style="font-size:11px;color:var(--dim);line-height:1.55">Open in Safari → tap the Share button (box with arrow) → scroll down → tap <strong>Add to Home Screen</strong> → tap Add. Done.</div></div>
+      </div>
+      <div style="display:flex;gap:12px;align-items:flex-start;padding:11px 0;border-bottom:1px solid var(--line);">
+        <div style="width:28px;height:28px;border-radius:6px;background:var(--dark);display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;color:white;">🤖</div>
+        <div><div style="font-size:12px;font-weight:600;color:var(--dark);margin-bottom:2px">Android</div><div style="font-size:11px;color:var(--dim);line-height:1.55">Open in Chrome → tap the 3-dot menu → tap <strong>Add to Home Screen</strong> → tap Add.</div></div>
+      </div>
+      <div style="display:flex;gap:12px;align-items:flex-start;padding:11px 0;">
+        <div style="width:28px;height:28px;border-radius:6px;background:var(--dark);display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;color:white;">💻</div>
+        <div><div style="font-size:12px;font-weight:600;color:var(--dark);margin-bottom:2px">Desktop (Chrome / Edge)</div><div style="font-size:11px;color:var(--dim);line-height:1.55">Look for the install icon (⬇) in the address bar or top-right of this app — tap it to install as a standalone desktop app.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Privacy card -->
+  <div class="card">
+    <div style="display:flex;align-items:flex-start;gap:12px;">
+      <div style="font-size:24px;flex-shrink:0;">🔒</div>
+      <div>
+        <div class="card-title" style="margin-bottom:5px;">Your data belongs to you — only you</div>
+        <div style="font-size:12px;color:var(--dim);line-height:1.7;">Everything you enter into Clear Mind Co. — your name, goals, tasks, habits, journal entries, financial information, and conversations — is stored <strong style="color:var(--dark)">only on your own device</strong>. It never leaves your browser. It is never sent to a server. It is never seen by Clear Mind Co. or anyone else.<br><br>Each person who uses this system has their own completely separate, completely private workspace. Nobody can see your data. Nobody can access it. It's yours.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Why this sticks card -->
+  <div class="card">
+    <div class="card-title">Why this actually sticks</div>
+    <div class="card-sub">This isn't willpower. It's system design.</div>
+    <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:4px;">
+      <div style="display:flex;gap:12px;align-items:flex-start;padding:11px 0;border-bottom:1px solid var(--line);">
+        <div style="width:32px;height:32px;border-radius:8px;background:var(--rust-bg);display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0;">1</div>
+        <div><div style="font-size:13px;font-weight:600;color:var(--dark);margin-bottom:2px">One thing at a time</div><div style="font-size:11px;color:var(--dim);line-height:1.55">ADHD brains shut down when they see too much. This system shows you one focus task — and only that — until it's done.</div></div>
+      </div>
+      <div style="display:flex;gap:12px;align-items:flex-start;padding:11px 0;border-bottom:1px solid var(--line);">
+        <div style="width:32px;height:32px;border-radius:8px;background:var(--gold-bg);display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0;">2</div>
+        <div><div style="font-size:13px;font-weight:600;color:var(--dark);margin-bottom:2px">Dopamine rewards on every action</div><div style="font-size:11px;color:var(--dim);line-height:1.55">Every check-off, every habit, every focus session grows your reward system and levels up your garden or quest. Your brain gets a hit for showing up.</div></div>
+      </div>
+      <div style="display:flex;gap:12px;align-items:flex-start;padding:11px 0;border-bottom:1px solid var(--line);">
+        <div style="width:32px;height:32px;border-radius:8px;background:var(--sage-bg);display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0;">3</div>
+        <div><div style="font-size:13px;font-weight:600;color:var(--dark);margin-bottom:2px">A coach that knows you</div><div style="font-size:11px;color:var(--dim);line-height:1.55">Your AI coach knows your name, your goal, your challenges, and how hard you want to be pushed. It doesn't give generic advice — it speaks directly to your situation.</div></div>
+      </div>
+      <div style="display:flex;gap:12px;align-items:flex-start;padding:11px 0;">
+        <div style="width:32px;height:32px;border-radius:8px;background:var(--brown-bg);display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0;">4</div>
+        <div><div style="font-size:13px;font-weight:600;color:var(--dark);margin-bottom:2px">No shame architecture</div><div style="font-size:11px;color:var(--dim);line-height:1.55">Missed habits don't reset your streak with punishment. The system never asks "why didn't you?" — it just says "pick back up." Consistency over perfection, always.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">How to Use Clear Mind Co.</div>
+    <div class="card-sub">Take the interactive tour — it walks you through every section in under 3 minutes. Tap the button below and we'll guide you through everything step by step.</div>
+    <!-- Interactive Tour Launch -->
+    <div style="background:linear-gradient(135deg,#C4A882,#8B6C42);border-radius:12px;padding:22px 20px;text-align:center;">
+      <div style="font-size:28px;margin-bottom:8px;">✦</div>
+      <div style="font-family:'Cormorant Garamond',serif;font-size:19px;font-weight:700;color:white;margin-bottom:6px;">Take the Interactive Tour</div>
+      <div style="font-size:12px;color:rgba(255,255,255,.75);margin-bottom:16px;line-height:1.6;">2 minutes. We'll walk you through every section — Home, Planner, Habits, Focus, Coach, and Money Mode. You'll know exactly what to tap and why.</div>
+      <button class="tour-start-btn" onclick="startTour()">Start Tour — 2 min ▶</button>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-title">Your 5-Step Daily Routine</div>
+    <div class="card-sub">This system works when you use it every day. Here's exactly how — in 10 minutes total.</div>
+    <div class="guide-step">
+      <div class="gs-num">1</div>
+      <div><div class="gs-title">Morning — open Home before your phone</div><div class="gs-desc">Check your one focus task and your energy level. 60 seconds. This sets your brain's intention before the noise starts.</div><span class="gs-action" onclick="goPage('home','pn-home')">Go to Home →</span></div>
+    </div>
+    <div class="guide-step">
+      <div class="gs-num">2</div>
+      <div><div class="gs-title">Set your MIT in Planner — the one thing</div><div class="gs-desc">Your Most Important Task is the one thing that absolutely must get done today. Mark it Must Do. Do it first. If you only do one thing — let it be this.</div><span class="gs-action" onclick="goPage('tasks','pn-tasks')">Go to Planner →</span></div>
+    </div>
+    <div class="guide-step">
+      <div class="gs-num">3</div>
+      <div><div class="gs-title">When stuck — start the Focus timer</div><div class="gs-desc">25 minutes. One task. Motivation comes after starting, not before. Press go. The Focus Zone also breaks any task into 5 small steps if it feels too big.</div><span class="gs-action" onclick="goPage('focus','pn-focus')">Go to Focus →</span></div>
+    </div>
+    <div class="guide-step">
+      <div class="gs-num">4</div>
+      <div><div class="gs-title">Before bed — log your habits</div><div class="gs-desc">One tap per habit. Takes 30 seconds. That 30 seconds builds the streak that builds the person you're becoming.</div><span class="gs-action" onclick="goPage('habits','pn-habits')">Go to Habits →</span></div>
+    </div>
+    <div class="guide-step">
+      <div class="gs-num">5</div>
+      <div><div class="gs-title">Anytime — talk to your Coach</div><div class="gs-desc">Stuck, spiraling, or doubting yourself? Your coach knows your goal, your challenges, how hard you want to be pushed. It's not a chatbot — it's built specifically for you.</div><span class="gs-action" onclick="goPage('coach','pn-coach')">Go to Coach →</span></div>
+    </div>
+  </div>
+</div>
+```
+
+  </div><!-- /scroll -->
+</div><!-- /app -->
+
+<script>
+// Global error handler — catches script errors gracefully
+window.onerror=function(msg,src,line,col,err){
+  console.warn('CMC error:',msg,'at',line);
+  return true; // Prevent default error UI
+};
+// ─── DATA ───
+var QS=[
+  {t:'The gap between who you are and who you want to be is closed by what you do today.',a:'Clear Mind Co.'},
+  {t:'Stop waiting to feel ready. Readiness is built by starting — not by waiting.',a:'Clear Mind Co.'},
+  {t:'You are not behind. You are exactly where your choices have brought you — and your next choice changes everything.',a:'Clear Mind Co.'},
+  {t:'One percent better every day is not a slogan. It\'s math.',a:'James Clear'},
+  {t:'Your brain is not broken. It just needs a system built around how it actually works.',a:'Clear Mind Co.'},
+  {t:'The most successful people are not the most talented. They are the most consistent.',a:'Clear Mind Co.'},
+  {t:'Stop romanticizing the start. Commit to the middle — that\'s where it gets built.',a:'Clear Mind Co.'},
+  {t:'The life you want is on the other side of the discipline you keep avoiding.',a:'Tony Robbins'},
+  {t:'You already know what to do. The question is whether you\'ll do it today.',a:'Clear Mind Co.'},
+  {t:'Every debt you eliminate is a piece of your future you\'re buying back.',a:'Clear Mind Co.'},
+  {t:'Progress is not always visible. But it is always real when you show up.',a:'Clear Mind Co.'},
+  {t:'You don\'t need more motivation. You need a smaller first step.',a:'Clear Mind Co.'},
+  {t:'The version of you who has the life you want made different daily decisions. Start making them now.',a:'Clear Mind Co.'},
+];
+
+var U={name:'',goal:'',why:'',challenges:[],push:'medium',growthStyle:'flower',tasks:[],goals:[],jEntries:[],habits:[],calNotes:{}};
+var tDone=0,hDone=0,oneDone=false,setupStep=0,challenges=[],pushStyle='medium',growthStyle='flower';
+var growthScore=0;
+
+// ─── DEFAULT HABITS ───
+var defaultHabits=[
+  {name:'Drank water first thing',streak:0,done:false,msg:'Hydration fuels your brain. You just gave it what it needs.',tip:'Leave a water bottle on your nightstand tonight.'},
+  {name:'No phone first 30 min',streak:0,done:false,msg:'You protected your morning brain. That\'s real discipline.',tip:'Airplane mode before bed — remove the temptation.'},
+  {name:'Moved my body',streak:0,done:false,msg:'Movement is the fastest reset. You just used it.',tip:'Same time tomorrow — make it automatic.'},
+  {name:'Journaled or reflected',streak:0,done:false,msg:'You slowed down and looked inward. Most people never do.',tip:'Leave your journal open on your desk tonight.'},
+  {name:'In bed by my target time',streak:0,done:false,msg:'Rest is strategy. You\'re showing up tomorrow with a full tank.',tip:'Set a wind-down alarm 30 min before target.'},
+  {name:'Checked my budget',streak:0,done:false,msg:'Awareness is the foundation of control. You stayed on top of it.',tip:'5-min budget check every morning — make it a ritual.'},
+];
+
+// ─── SETUP ───
+function goStep(n){
+  if(n===2){var nm=(document.getElementById('sName').value||'').trim();if(!nm){document.getElementById('sName').focus();return;}U.name=nm;}
+  if(n===3){var g=(document.getElementById('sGoal').value||'').trim();if(!g){document.getElementById('sGoal').focus();return;}U.goal=g;U.why=(document.getElementById('sWhy').value||'').trim();}
+  if(n===4&&challenges.length===0){var sc=document.getElementById('selCount');if(sc){sc.textContent='Please select at least one above.';sc.style.color='var(--rust)';}return;}
+  document.getElementById('s'+setupStep).classList.remove('on');
+  setupStep=n;
+  document.getElementById('s'+n).classList.add('on');
+  for(var i=0;i<=5;i++){var d=document.getElementById('sd'+i);if(d)d.classList.toggle('on',i===n);}
+}
+function togC(el,val){
+  var idx=challenges.indexOf(val);
+  if(idx>-1){challenges.splice(idx,1);el.classList.remove('sel');}
+  else{challenges.push(val);el.classList.add('sel');}
+  U.challenges=challenges;
+  var sc=document.getElementById('selCount');
+  if(sc){sc.textContent=challenges.length===0?'Select all that apply':challenges.length+' selected';sc.style.color=challenges.length?'var(--brown)':'var(--dim)';}
+}
+function selPush(el,val){document.querySelectorAll('.push-opt').forEach(function(p){p.classList.remove('sel');});el.classList.add('sel');pushStyle=val;U.push=val;}
+function selGrowth(val){
+  growthStyle=val;U.growthStyle=val;
+  document.querySelectorAll('.growth-opt').forEach(function(o){o.classList.remove('sel');});
+  var sel=document.getElementById('go-'+val);if(sel)sel.classList.add('sel');
+}
+function forceSkipSetup(){
+  // Emergency escape — dismiss modal and launch with whatever we have
+  var modal=document.getElementById('setup');
+  if(modal)modal.classList.add('gone');
+  if(!U.name)U.name='';
+  try{initApp();}catch(e){
+    // Last resort — just hide setup, show blank app
+    console.error('initApp failed:',e);
+  }
+}
+
+function finishSetup(){
+  var modal=document.getElementById('setup');
+  if(modal)modal.classList.add('gone');
+  lastOpenDate=getTodayStr();
+  currentStreak=1;
+  bannerDismissed=false;
+  try{
+    saveData();
+    initApp();
+  }catch(e){
+    // If anything goes wrong, app is still visible and usable
+    console.error('Setup finish error:',e);
+  }
+}
+
+function initApp(){
+  var now=new Date();
+  var days=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  var months=['January','February','March','April','May','June','July','August','September','October','November','December'];
+  var h=now.getHours();
+  var g=h<12?'Good morning':h<18?'Good afternoon':'Good evening';
+
+  // Validate saved data quality — if name/goal look corrupted, clear them
+  if(U.name&&U.name.length<=1){U.name='';}
+  if(U.goal&&(U.goal===U.name||U.goal.length<=2)){U.goal='';}
+  if(U.why&&(U.why===U.name||U.why===U.goal)){U.why='';}
+
+  var el=document.getElementById('greeting');if(el)el.textContent=U.name?g+', '+U.name+'.':g+'.';
+  var cd=document.getElementById('coverDate');if(cd)cd.textContent=days[now.getDay()]+', '+months[now.getMonth()]+' '+now.getDate();
+  var jd=document.getElementById('jDate');if(jd)jd.textContent=days[now.getDay()]+', '+months[now.getMonth()]+' '+now.getDate()+', '+now.getFullYear();
+  var q=QS[Math.floor(Math.random()*QS.length)];
+  var qt=document.getElementById('qText');if(qt)qt.textContent=q.t;
+  var qa=document.getElementById('qAuthor');if(qa)qa.textContent='— '+q.a;
+
+  // Update streak display
+  var stStr=document.getElementById('stStreak');if(stStr)stStr.textContent=currentStreak;
+  var stStrB=document.getElementById('stStreakB');if(stStrB)stStrB.style.width=Math.min(100,currentStreak*5)+'%';
+
+  // Habits
+  try{if(!U.habits||!U.habits.length)U.habits=defaultHabits.map(function(h){return Object.assign({},h);});renderHabits();}catch(e){}
+  // Tasks
+  try{renderTasks();}catch(e){}
+  // Goals
+  try{if(U.goals&&U.goals.length){renderGoals();}else if(U.goal){U.goals=[{name:U.goal,why:U.why,pct:5,cat:'Personal',date:''}];renderGoals();}}catch(e){}
+  // Journal
+  try{if(U.jEntries&&U.jEntries.length)renderJ();}catch(e){}
+  // Journal prompts
+  var jpRow=document.getElementById('jpRow');
+  if(jpRow){
+    var prompts=U.goal?[
+      'How am I progressing toward: '+U.goal+'?',
+      'What\'s holding me back right now and what changes if I let it go?',
+      'What does my best self look like in 1 year?',
+      'What am I most proud of lately, even the small things?'
+    ]:[
+      'Where am I in life right now — honestly?',
+      'What\'s holding me back and what changes if I let it go?',
+      'What does my best self look like in 1 year?',
+      'What am I most proud of lately, even the small things?'
+    ];
+    jpRow.innerHTML='';
+    prompts.forEach(function(p){var d=document.createElement('div');d.className='jp';d.textContent=p;d.onclick=function(){var a=document.getElementById('jInput');if(a){a.value=p+'\n\n';a.focus();}};jpRow.appendChild(d);});
+  }
+  // Coach
+  if(U.name){
+    var cn=document.getElementById('coachName');if(cn)cn.textContent=U.name+"'s Clear Mind Coach";
+    var om=document.getElementById('openMsg');
+    var goalLooksValid=U.goal&&U.goal.length>4&&U.goal!==U.name;
+    if(om&&goalLooksValid){om.textContent='Hey '+U.name+'. I know you\'re working toward '+U.goal+'. What\'s on your mind right now — let\'s figure out your next move.';}
+    else if(om&&U.name){om.textContent='Hey '+U.name+'. What\'s going on right now? Tell me what you\'re working on and we\'ll figure out your next move together.';}
+  }
+  // Growth widget
+  renderGrowth();
+  // New user banner
+  var banner=document.getElementById('newUserBanner');
+  if(banner){banner.style.display=bannerDismissed?'none':'flex';}
+  // Pre-fill 2 debt rows only if none exist
+  if(!document.querySelector('#debtInputRows .d-row')){addDebtRow('','','','');addDebtRow('','','','');}
+  // Save updated last date
+  lastOpenDate=getTodayStr();
+  saveData();
+}
+
+// ─── NAV ───
+function goPage(page,tabId){
+  document.querySelectorAll('.pg').forEach(function(p){p.classList.remove('on');});
+  document.querySelectorAll('.pn').forEach(function(t){t.classList.remove('on');});
+  var pg=document.getElementById('pg-'+page);if(pg)pg.classList.add('on');
+  var tb=document.getElementById(tabId);if(tb)tb.classList.add('on');
+  // Update focus task display when switching to focus page
+  if(page==='focus')updateFocusTaskDisplay();
+}
+function swTab(t){
+  document.querySelectorAll('.tb-tab').forEach(function(x){x.classList.remove('on');});
+  var el=document.getElementById('tt-'+t);if(el)el.classList.add('on');
+  if(t==='month')openCal();
+  if(t==='week')openWeek();
+}
+
+// ─── WEEK VIEW ───
+function openWeek(){
+  var modal=document.getElementById('weekModal');
+  if(!modal)return;
+  renderWeek();
+  modal.classList.add('show');
+}
+function closeWeek(){
+  var modal=document.getElementById('weekModal');
+  if(modal)modal.classList.remove('show');
+}
+function renderWeek(){
+  var grid=document.getElementById('weekGrid');if(!grid)return;
+  var days=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  var today=new Date();
+  // Find start of week (Sunday)
+  var start=new Date(today);
+  start.setDate(today.getDate()-today.getDay());
+  var months=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  grid.innerHTML='';
+  for(var i=0;i<7;i++){
+    var d=new Date(start);
+    d.setDate(start.getDate()+i);
+    var key='week-'+d.getFullYear()+'-'+d.getMonth()+'-'+d.getDate();
+    var isToday=(d.toDateString()===today.toDateString());
+    var saved=U.calNotes&&U.calNotes[key]||{};
+    var row=document.createElement('div');
+    row.style.cssText='padding:10px 0;border-bottom:1px solid var(--line);';
+    row.innerHTML=
+      '<div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;">'
+      +'<div style="width:32px;height:32px;border-radius:8px;background:'+(isToday?'var(--dark)':'var(--cream)')+';display:flex;flex-direction:column;align-items:center;justify-content:center;flex-shrink:0;">'
+      +'<div style="font-size:9px;font-weight:600;color:'+(isToday?'rgba(255,255,255,.6)':'var(--dim)')+';letter-spacing:.5px;">'+days[d.getDay()].slice(0,3).toUpperCase()+'</div>'
+      +'<div style="font-size:13px;font-weight:700;color:'+(isToday?'white':'var(--dark)')+';">'+d.getDate()+'</div>'
+      +'</div>'
+      +'<input class="cal-inp" placeholder="Goal or intention for '+days[d.getDay()]+'..." value="'+(saved.goal||'')+'" data-key="'+key+'" oninput="saveWeekEntry(this)" style="margin-bottom:0;flex:1;">'
+      +'</div>';
+    grid.appendChild(row);
+  }
+}
+function saveWeekEntry(inp){
+  var key=inp.getAttribute('data-key');
+  if(!key)return;
+  if(!U.calNotes)U.calNotes={};
+  if(inp.value.trim()){U.calNotes[key]={goal:inp.value.trim()};}
+  else{delete U.calNotes[key];}
+  saveData();
+}
+
+// ─── DUMP TOGGLE ───
+function toggleDump(){
+  var exp=document.getElementById('dumpExpanded');
+  var icon=document.getElementById('dumpToggleIcon');
+  if(!exp)return;
+  var open=exp.style.display!=='none';
+  exp.style.display=open?'none':'block';
+  if(icon)icon.style.transform=open?'':'rotate(45deg)';
+}
+
+// ─── BANNER ───
+function dismissBanner(){
+  var b=document.getElementById('newUserBanner');if(b)b.style.display='none';
+  try{localStorage.setItem('cmc_banner_dismissed','1');}catch(e){}
+}
+
+// ─── FOCUS TASK DISPLAY ───
+function updateFocusTaskDisplay(){
+  var first=U.tasks.find(function(t){return !t.done&&t.pri==='must'})||U.tasks.find(function(t){return !t.done;});
+  var disp=document.getElementById('focusTaskDisplay');
+  var name=document.getElementById('focusTaskName');
+  if(disp&&name){
+    if(first){disp.style.display='block';name.textContent=first.name;}
+    else{disp.style.display='none';}
+  }
+}
+
+// ─── LOCAL STORAGE ───
+var SAVE_KEY='cmc_data_v10';
+function saveData(){
+  try{localStorage.setItem(SAVE_KEY,JSON.stringify({U:U,growthScore:growthScore,streak:currentStreak,lastDate:lastOpenDate,bannerDismissed:bannerDismissed}));}catch(e){}
+}
+function loadData(){
+  try{
+    var raw=localStorage.getItem(SAVE_KEY);
+    if(!raw)return false;
+    var saved=JSON.parse(raw);
+    if(saved.U){
+      // Restore user data
+      Object.assign(U,saved.U);
+      // Reset daily habit done state (new day = habits reset)
+      var today=getTodayStr();
+      if(saved.lastDate&&saved.lastDate!==today){
+        U.habits=U.habits.map(function(h){return Object.assign({},h,{done:false});});
+        U.tasks=U.tasks.map(function(t){return Object.assign({},t,{done:false});});
+        tDone=0;hDone=0;oneDone=false;
+      } else {
+        // Same day - restore done counts
+        tDone=U.tasks.filter(function(t){return t.done;}).length;
+        hDone=U.habits.filter(function(h){return h.done;}).length;
+        oneDone=saved.U.tasks&&saved.U.tasks.some(function(t){return t.done&&t.pri==='must';});
+      }
+    }
+    if(saved.growthScore)growthScore=saved.growthScore;
+    if(saved.bannerDismissed)bannerDismissed=saved.bannerDismissed;
+    // Streak logic
+    handleStreak(saved.lastDate,saved.streak||0);
+    return true;
+  }catch(e){return false;}
+}
+function getTodayStr(){
+  var d=new Date();return d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate();
+}
+function handleStreak(lastDate,savedStreak){
+  var today=getTodayStr();
+  if(!lastDate){currentStreak=1;lastOpenDate=today;return;}
+  var last=new Date(lastDate.replace(/-/g,'/'));
+  var now=new Date();
+  var diffDays=Math.round((now-last)/(1000*60*60*24));
+  if(diffDays===0){currentStreak=savedStreak||1;lastOpenDate=today;}
+  else if(diffDays===1){currentStreak=(savedStreak||0)+1;lastOpenDate=today;}
+  else{currentStreak=1;lastOpenDate=today;}
+}
+var currentStreak=1,lastOpenDate=getTodayStr(),bannerDismissed=false;
+
+
+var FLOWER_STAGES=[
+  {score:0,icon:'🌱',label:'Seed planted',desc:'Every journey begins with one small step.',level:'Stage 1'},
+  {score:20,icon:'🌿',label:'You\'re sprouting',desc:'Your consistency is showing. Keep going.',level:'Stage 2'},
+  {score:50,icon:'🌸',label:'Flowers forming',desc:'Real growth is happening. Stay the course.',level:'Stage 3'},
+  {score:100,icon:'🌺',label:'In full bloom',desc:'You\'re thriving. This is what it looks like.',level:'Stage 4'},
+  {score:180,icon:'🌳',label:'A mighty tree',desc:'Rooted, strong, unstoppable. You built this.',level:'Stage 5 — Legend'},
+];
+var KNIGHT_STAGES=[
+  {score:0,icon:'🗡️',label:'Training begins',desc:'Every champion started right here.',level:'Stage 1'},
+  {score:20,icon:'🛡️',label:'Shield earned',desc:'You\'ve proven you can take the hits. Keep going.',level:'Stage 2'},
+  {score:50,icon:'⚔️',label:'Knight in the making',desc:'Your consistency is building real strength.',level:'Stage 3'},
+  {score:100,icon:'🏆',label:'Champion rising',desc:'Most people quit here. You didn\'t.',level:'Stage 4'},
+  {score:180,icon:'👑',label:'Legend status',desc:'You\'ve built what others only dream about.',level:'Stage 5 — Legend'},
+];
+
+function renderGrowth(){
+  var style=U.growthStyle||growthStyle||'flower';U.growthStyle=style;growthStyle=style;
+  var stages=style==='knight'?KNIGHT_STAGES:FLOWER_STAGES;
+  var stage=stages[0];
+  for(var i=stages.length-1;i>=0;i--){if(growthScore>=stages[i].score){stage=stages[i];break;}}
+  var nextStage=null;
+  for(var j=0;j<stages.length;j++){if(stages[j].score>growthScore){nextStage=stages[j];break;}}
+  var pct=nextStage?Math.min(100,Math.round((growthScore-stage.score)/(nextStage.score-stage.score)*100)):100;
+  var scene=document.getElementById('gwScene');
+  if(scene){scene.innerHTML='<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;gap:6px"><div style="font-size:56px;transition:all .5s ease;animation:growPulse 2s ease-in-out infinite">'+stage.icon+'</div><div style="font-family:\'Cormorant Garamond\',serif;font-size:16px;font-weight:700;color:var(--dark)">'+stage.label+'</div></div>';}
+  var gwFill=document.getElementById('gwFill');if(gwFill)gwFill.style.width=Math.max(5,pct)+'%';
+  var gwStatus=document.getElementById('gwStatus');if(gwStatus)gwStatus.textContent=stage.desc+(nextStage?' · '+(nextStage.score-growthScore)+' points to next stage':'');
+  var gwLevel=document.getElementById('gwLevel');if(gwLevel)gwLevel.textContent=stage.level;
+  var gwTitle=document.getElementById('gwTitle');if(gwTitle)gwTitle.textContent=style==='knight'?'Your Knight\'s Quest':'Your Garden';
+}
+function addGrowthScore(pts){growthScore+=pts;renderGrowth();}
+// Pulse animation for icon
+// growPulse animation injected safely at runtime (see injectStyles)
+
+// ─── STATS ───
+function updateStats(){
+  var tot=U.tasks.length,done=U.tasks.filter(function(t){return t.done;}).length,left=Math.max(0,tot-done);
+  var stT=document.getElementById('stT');if(stT)stT.textContent=tot===0?'—':left+' left';
+  var stTB=document.getElementById('stTB');if(stTB)stTB.style.width=(tot>0?done/tot*100:0)+'%';
+  var stH=document.getElementById('stH');if(stH)stH.textContent=hDone+'/'+U.habits.length;
+  var stHB=document.getElementById('stHB');if(stHB)stHB.style.width=(U.habits.length>0?hDone/U.habits.length*100:0)+'%';
+  var first=U.tasks.find(function(t){return !t.done&&t.pri==='must'})||U.tasks.find(function(t){return !t.done;});
+  var fc=document.getElementById('fcTask');if(fc&&first&&!oneDone)fc.textContent=first.name;
+}
+
+// ─── ONE THING ───
+function completeOne(){
+  if(oneDone)return;oneDone=true;
+  var b=document.getElementById('fcBtn');if(b)b.classList.add('done');
+  var i=document.getElementById('fcIcon');if(i)i.textContent='✓';
+  var t=document.getElementById('fcText');if(t)t.textContent='Done. Keep going.';
+  addGrowthScore(10);
+  cel('✅','First task done.','That\'s how momentum starts. One thing at a time.','5-minute break — stand up, breathe.');
+}
+
+function renderTasks(){
+  var list=document.getElementById('taskList');if(!list)return;
+  if(!U.tasks.length){list.innerHTML='<div style="padding:14px 0;text-align:center;color:var(--dim);font-size:12px">No tasks yet. Add one below.</div>';updateStats();return;}
+  list.innerHTML='';
+  U.tasks.forEach(function(t,i){
+    var div=document.createElement('div');div.className='task-item'+(t.done?' done':'');
+    var pm={must:'<span class="t-pri p-must">Must Do — Do this first</span>',should:'<span class="t-pri p-should">Should Do</span>',bonus:'<span class="t-pri p-bonus">Bonus</span>'};
+    div.innerHTML=
+      '<div class="t-dot" onclick="checkTask('+i+')">✓</div>'+
+      '<div class="t-body" onclick="checkTask('+i+')"><div class="t-name">'+t.name+'</div></div>'+
+      pm[t.pri]+
+      '<button onclick="deleteTask('+i+')" style="background:none;border:none;color:var(--faint);font-size:13px;cursor:pointer;padding:0 4px;flex-shrink:0;transition:color .15s;" onmouseover="this.style.color=\'var(--rust)\'" onmouseout="this.style.color=\'var(--faint)\'">✕</button>';
+    list.appendChild(div);
+  });updateStats();
+}
+function checkTask(i){
+  var t=U.tasks[i];if(t.done)return;
+  t.done=true;tDone++;
+  addGrowthScore(10);
+  renderTasks();saveData();
+  var n=U.tasks.filter(function(x){return x.done;}).length;
+  var ms=[{e:'✅',t:'Task done.',m:'One down. Momentum is starting.',r:'Quick stretch — 2 minutes.'},{e:'🔥',t:'Two tasks done.',m:'You\'re in execution mode.',r:'Water. Keep going.'},{e:'🏆',t:'All tasks done.',m:'Successful day. Everything else is a bonus.',r:'Do something tonight that fills you up.'}];
+  var md=ms[Math.min(n-1,2)];cel(md.e,md.t,md.m,md.r);
+}
+function deleteTask(i){
+  if(U.tasks[i].done)tDone=Math.max(0,tDone-1);
+  U.tasks.splice(i,1);renderTasks();saveData();
+}
+function addTask(){
+  var inp=document.getElementById('taskInp'),pri=document.getElementById('taskPri');
+  if(!inp||(inp.value||'').trim()==='')return;
+  U.tasks.push({name:inp.value.trim(),done:false,pri:pri.value});
+  inp.value='';renderTasks();saveData();
+}
+
+// ─── HABITS ───
+function renderHabits(){
+  var list=document.getElementById('habitList');if(!list)return;
+  list.innerHTML='';
+  U.habits.forEach(function(h,i){
+    var div=document.createElement('div');div.className='habit'+(h.done?' done':'');
+    div.innerHTML='<div class="h-box" onclick="doHabit('+i+')">✓</div><span class="h-name" onclick="doHabit('+i+')">'+h.name+'</span><span class="h-streak">'+(h.streak?h.streak+' days':'')+'</span><button class="h-del" onclick="delHabit('+i+')" title="Remove">✕</button>';
+    list.appendChild(div);
+  });
+  updateStats();
+}
+function doHabit(i){
+  var h=U.habits[i];
+  if(h.done){h.done=false;hDone=Math.max(0,hDone-1);renderHabits();updateStats();saveData();return;}
+  h.done=true;h.streak=(h.streak||0)+1;hDone++;
+  renderHabits();updateStats();saveData();
+  addGrowthScore(5);
+  cel('✨',h.msg||'Habit done.',h.name+' — logged.',h.tip||'Keep the streak going.');
+  if(hDone===U.habits.length)setTimeout(function(){cel('🏆','Perfect habit day.','Every habit. You\'re becoming the person you said you wanted to be.','One full hour of anything you love — no guilt.');},400);
+}
+function addHabit(){
+  var inp=document.getElementById('habitInp');if(!inp||(inp.value||'').trim()==='')return;
+  U.habits.push({name:inp.value.trim(),streak:0,done:false,msg:'Habit logged.',tip:'Keep the streak alive.'});
+  inp.value='';renderHabits();saveData();
+}
+function delHabit(i){U.habits.splice(i,1);if(hDone>U.habits.length)hDone=U.habits.length;renderHabits();saveData();}
+function setMood(el,label){document.querySelectorAll('.mood-opt').forEach(function(m){m.classList.remove('on');});el.classList.add('on');var ml=document.getElementById('moodLbl');if(ml)ml.textContent=label;}
+
+// ─── POMODORO ───
+var pSec=1500,pRun=false,pInt=null;
+function togglePomo(){
+  var btn=document.getElementById('pomBtn'),ph=document.getElementById('pomPhase');
+  if(!pRun){pRun=true;if(btn)btn.textContent='Pause';if(ph)ph.textContent='Focus. You\'ve got this.';
+    pInt=setInterval(function(){pSec--;
+      if(pSec<=0){pSec=0;clearInterval(pInt);pRun=false;if(btn)btn.textContent='Start';if(ph)ph.textContent='Session complete';addGrowthScore(15);cel('✨','25 minutes done.','One full deep work session. That\'s real progress.','5-min break — walk, water, breathe.');}
+      var m=Math.floor(pSec/60),s=pSec%60,pt=document.getElementById('pomTime');if(pt)pt.textContent=(m<10?'0':'')+m+':'+(s<10?'0':'')+s;},1000);
+  }else{clearInterval(pInt);pRun=false;if(btn)btn.textContent='Start';if(ph)ph.textContent='Paused.';}
+}
+function resetPomo(){clearInterval(pInt);pRun=false;pSec=1500;var pt=document.getElementById('pomTime'),ph=document.getElementById('pomPhase'),pb=document.getElementById('pomBtn');if(pt)pt.textContent='25:00';if(ph)ph.textContent='Ready when you are';if(pb)pb.textContent='Start';}
+
+// ─── GOALS ───
+function addGoal(){
+  var n=(document.getElementById('gName').value||'').trim();if(!n)return;
+  U.goals.push({name:n,why:(document.getElementById('gWhy').value||'').trim(),pct:0,cat:(document.getElementById('gCat').value||'Personal'),date:(document.getElementById('gDate').value||'')});
+  document.getElementById('gName').value='';document.getElementById('gWhy').value='';
+  renderGoals();cel('✨','Goal added.','It\'s in the system. Now let\'s build it.','Tell someone about this goal today — commitment gets real when spoken.');saveData();
+}
+function renderGoals(){
+  var list=document.getElementById('goalList');if(!list)return;
+  if(!U.goals.length){list.innerHTML='<div style="padding:14px 0;text-align:center;color:var(--dim);font-size:12px">No goals yet. Add one below.</div>';return;}
+  list.innerHTML='';
+  var cols={Business:'var(--brown)',Health:'var(--sage)',Money:'var(--gold)',Personal:'var(--rust)',Relationships:'#A07848',Content:'var(--sage)'};
+  U.goals.forEach(function(g,i){
+    var c=cols[g.cat]||'var(--brown)';
+    var div=document.createElement('div');div.className='goal-item';
+    div.innerHTML='<div class="g-top"><div class="g-name">'+g.name+'</div><div class="g-pct" id="gpct'+i+'">'+g.pct+'%</div></div>'+
+      '<div class="g-track"><div class="g-fill" id="gfill'+i+'" style="width:'+g.pct+'%;background:'+c+'"></div></div>'+
+      '<div class="g-meta">'+g.cat+(g.date?' · '+new Date(g.date+' ').toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}):'')+'</div>'+
+      (g.why?'<div class="g-why">Why: '+g.why+'</div>':'')+
+      '<div style="display:flex;align-items:center;gap:8px;margin-top:8px"><input type="range" min="0" max="100" value="'+g.pct+'" style="flex:1;accent-color:var(--brown);cursor:pointer" oninput="updateG('+i+',this.value)"></div>';
+    list.appendChild(div);
+  });
+}
+function updateG(i,v){
+  U.goals[i].pct=parseInt(v);
+  var p=document.getElementById('gpct'+i);if(p)p.textContent=v+'%';
+  var f=document.getElementById('gfill'+i);if(f)f.style.width=v+'%';
+  saveData();
+  if(parseInt(v)===100){addGrowthScore(30);setTimeout(function(){cel('🏆','Goal reached!','You set it, you showed up, you crossed the finish line.','Celebrate tonight. You earned this one.');},150);}
+}
+
+// ─── JOURNAL ───
+function saveJ(){
+  var inp=document.getElementById('jInput');if(!inp||(inp.value||'').trim()==='')return;
+  var now=new Date();U.jEntries.unshift({text:inp.value.trim(),date:now.toLocaleDateString('en-US',{weekday:'long',year:'numeric',month:'long',day:'numeric'})});
+  inp.value='';renderJ();addGrowthScore(5);saveData();
+  cel('📓','Journal saved.','Writing is thinking. You just got clearer.','Read this again in 30 days.');
+}
+function renderJ(){
+  var list=document.getElementById('jEntries'),wrap=document.getElementById('jEntriesWrap');
+  if(!list||!wrap)return;if(!U.jEntries.length){wrap.style.display='none';return;}
+  wrap.style.display='block';list.innerHTML='';
+  U.jEntries.forEach(function(e){var d=document.createElement('div');d.className='j-entry';d.innerHTML='<div class="j-entry-date">'+e.date+'</div><div class="j-entry-text">'+e.text.replace(/\n/g,'<br>')+'</div>';list.appendChild(d);});
+}
+
+// ─── BRAIN DUMP AI ORGANIZER ───
+async function organizeDump(){
+  var text=(document.getElementById('dumpText').value||'').trim();
+  if(!text){document.getElementById('dumpText').focus();return;}
+  var btn=document.getElementById('organizeBtn');if(btn){btn.disabled=true;btn.textContent='Organizing...';}
+  var sys='You are a productivity organizer. The user has done a brain dump — raw thoughts, tasks, worries, ideas. Analyze everything and organize into a clear priority checklist.\n\nReturn ONLY valid JSON. No other text. No markdown. No backticks. Exact format:\n{"must":[{"task":"task name","steps":["step 1","step 2"]}],"should":[{"task":"task name","steps":["step 1","step 2"]}],"later":[{"task":"task name","steps":["step 1"]}]}\n\nRules:\n- must = urgent/important TODAY\n- should = important but not urgent\n- later = can wait or is just an idea\n- Give 2-3 actionable steps per task max\n- Be concise. Tasks should be action-oriented phrases.';
+  try{
+    var res=await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','anthropic-dangerous-direct-browser-access':'true'},
+      body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:800,system:sys,messages:[{role:'user',content:'Organize this brain dump:\n\n'+text}]})
+    });
+    var data=await res.json();
+    var raw=(data.content&&data.content[0]&&data.content[0].text)||'{}';
+    // Clean possible markdown
+    var clean=raw.replace(/```json/g,'').replace(/```/g,'').trim();
+    var parsed=JSON.parse(clean);
+    renderOrganized(parsed);
+    addGrowthScore(5);
+  }catch(e){
+    var result=document.getElementById('organizedResult');
+    if(result){result.style.display='block';result.innerHTML='<div style="padding:12px;background:var(--rust-bg);border-radius:8px;font-size:12px;color:var(--rust)">Could not organize right now. Make sure you have a connection and try again.</div>';}
+  }
+  if(btn){btn.disabled=false;btn.textContent='Organize by Priority ✦';}
+}
+function renderOrganized(data){
+  var result=document.getElementById('organizedResult');if(!result)return;
+  result.style.display='block';
+  var groups=[
+    {key:'must',label:'Do First — Today',desc:'Urgent & important',dotClass:'dot-must',color:'var(--rust)'},
+    {key:'should',label:'Should Do — Soon',desc:'Important, not urgent',dotClass:'dot-should',color:'var(--gold)'},
+    {key:'later',label:'Later — Ideas & Nice-to-haves',desc:'Can wait',dotClass:'dot-later',color:'var(--sage)'},
+  ];
+  var html='<div class="slbl">Organized — tap to check off</div>';
+  var uid=0;
+  groups.forEach(function(g){
+    var items=data[g.key]||[];if(!items.length)return;
+    html+='<div class="priority-group">';
+    html+='<div class="pg-header"><div class="pg-dot '+g.dotClass+'"></div><div class="pg-label">'+g.label+'</div><div class="pg-desc">'+g.desc+'</div></div>';
+    items.forEach(function(item){
+      var id='cli'+uid++;
+      html+='<div class="checklist-item"><div class="cl-check" id="'+id+'" onclick="toggleCL(\''+id+'\')"></div><div class="cl-body"><div class="cl-task" id="t'+id+'">'+item.task+'</div>';
+      if(item.steps&&item.steps.length){html+='<div class="cl-steps">';item.steps.forEach(function(s,si){html+='<div class="cl-step"><span class="cl-step-n">'+(si+1)+'.</span>'+s+'</div>';});html+='</div>';}
+      html+='</div></div>';
+    });
+    html+='</div>';
+  });
+  result.innerHTML=html;
+}
+function toggleCL(id){
+  var box=document.getElementById(id);var task=document.getElementById('t'+id);
+  if(!box||!task)return;
+  var done=box.classList.toggle('done');
+  task.classList.toggle('striked',done);
+  if(done)addGrowthScore(5);
+}
+
+// ─── COACH — Smart offline engine + optional API upgrade ───
+var chatHist=[];
+
+// Smart response engine — reads the actual message, gives real answers
+function smartCoachReply(msg){
+  var m=msg.toLowerCase().trim();
+  var name=U.name||'';
+  var goal=U.goal||'your goal';
+  var challenges=U.challenges||[];
+  var push=U.push||'medium';
+  var n=name?name+', ':'';
+  var G=goal;
+
+  // Challenge flags
+  var hasADHD=challenges.indexOf('ADHD / Distraction')>-1;
+  var hasProc=challenges.indexOf('Procrastination')>-1;
+  var hasOver=challenges.indexOf('Overwhelm')>-1;
+  var hasDoubt=challenges.indexOf('Self-doubt')>-1;
+  var hard=push==='hard';
+  var soft=push==='gentle';
+
+  // ── Read what they actually said ──
+  // STEPS/PLAN REQUEST — user explicitly asks for steps, a plan, a breakdown
+  var isStepsRequest=/(break.*down|break.*into|give me steps|five steps|5 steps|step by step|step-by-step|action plan|give me a plan|make a plan|what are the steps|how do i start|walk me through|help me plan|outline|roadmap|next steps|what steps|easy steps|clear steps|simple steps|follow steps|fallow steps)/.test(m);
+  // TASK/PROJECT HELP — "need help with X", "can't finish X", "working on X"
+  var isTaskHelp=/(need help|can't finish|help me finish|help finishing|help with|working on|trying to finish|need to finish|can't get|struggling with|how do i|how to)/.test(m);
+  // STARTING — can't start, don't know how to begin
+  var isCantStart=/(can't start|don't know where to start|don't know how to start|where do i begin|how do i start|getting started|can't begin|don't know what to do first)/.test(m);
+  // PROCRASTINATION
+  var isProc=/(procrastinat|putting it off|keep putting|keep avoiding|avoiding|keep delaying|haven't started|can't make myself|keep finding excuses|always later|keep saying later)/.test(m);
+  // STUCK/FUNK
+  var isStuck=/(stuck|in a funk|no motivation|can't motivate|don't want to|not feeling it|nothing is working|going in circles|spinning|lost|blank|zoned out|going nowhere|feel like giving up)/.test(m);
+  // OVERWHELM
+  var isOverwhelm=/(overwhelm|too much|so much to do|don't know where|everything at once|can't keep up|spiral|anxiety|stressed out|too many things|all at once|don't know which)/.test(m);
+  // SELF DOUBT
+  var isDoubt=/(doubt|not good enough|going to fail|can't do this|who am i|imposter|don't think i can|not sure i can|feel like a fraud|feel like i'm failing|not smart enough|not ready)/.test(m);
+  // WIN
+  var isWin=/(did it|i finished|i completed|just finished|just done|i did|i won|crushed it|nailed it|killed it|proud of myself|i succeeded|i made it|got it done|finally finished|just launched|just sold|first sale)/.test(m);
+  // HABITS
+  var isHabit=/(habit|streak|broke my streak|missed my habit|consistent|routine|keep forgetting|can't stay consistent|fell off|fell off track|can't stick to)/.test(m);
+  // MONEY/DEBT
+  var isMoney=/(debt|money|broke|bills|financial|pay off|can't afford|budget|credit card|loan|owe|in debt|financial stress|money stress)/.test(m);
+  // TIRED/BURNOUT
+  var isTired=/(tired|exhausted|burned out|burnt out|drained|no energy|can't keep going|need rest|sleep|fatigue|running on empty)/.test(m);
+  // FOCUS/DISTRACTION
+  var isFocus=/(can't focus|keep getting distracted|distracted|losing focus|can't concentrate|keeps interrupting|phone|social media|losing track|can't sit down|mind wanders|attention)/.test(m);
+  // NEXT STEP / WHAT TO DO
+  var isNextStep=/(what should i|what's next|what do i do|next step|what first|where do i start|what to work on|what to do next|what do i focus on|help me decide|what's my|my next move)/.test(m);
+  // BUSINESS/SIDE HUSTLE
+  var isBusiness=/(business|etsy|gumroad|product|launch|sell|sales|customers|listing|shop|income|revenue|clients|brand|notion|template)/.test(m);
+  // ANGER/FRUSTRATION
+  var isAnger=/(angry|frustrated|pissed|mad|annoyed|hate this|can't take it|fed up|sick of this|nothing works|waste of time)/.test(m);
+  // RELATIONSHIP/PERSONAL
+  var isPersonal=/(relationship|partner|family|friends|lonely|alone|nobody|isolat|people don't|feel misunderstood|no support)/.test(m);
+
+  // ── Avoid exact repeat of last coach message ──
+  var lastCoach='';
+  for(var i=chatHist.length-1;i>=0;i--){
+    if(chatHist[i].role==='assistant'){lastCoach=chatHist[i].content;break;}
+  }
+  function pick(arr){
+    var filtered=arr.filter(function(r){return r.trim()!==lastCoach.trim();});
+    if(!filtered.length)filtered=arr;
+    return filtered[Math.floor(Math.random()*filtered.length)];
+  }
+
+  // ── STEPS/PLAN REQUEST — always deliver actual steps, never deflect ──
+  if(isStepsRequest){
+    // Detect what they're building/working on from context
+    var isBizContext=/(notion|business|product|etsy|gumroad|launch|side hustle|template|shop|brand|sell|sales|income)/.test(m);
+    var isAppContext=/(app|website|code|project|design|build)/.test(m);
+    var isGoalContext=/(goal|habit|routine|system|life|health|fitness|debt|money)/.test(m);
+
+    if(isBizContext){
+      return (n||'Here\'s what to do — ')+'here are 5 steps to move your notion business forward right now:\n\n1. List your 3 most profitable product ideas — what problem does each solve?\n2. Pick ONE and write a simple product description in 2 sentences\n3. Set up your Etsy or Gumroad listing today — even a draft counts\n4. Post one piece of content showing the problem your product solves\n5. Send your link to 5 people today and ask for honest feedback\n\nWhich of these 5 feels hardest right now?';
+    } else if(isAppContext){
+      return (n||'Here\'s your plan — ')+'5 steps to make progress on your project today:\n\n1. Write down exactly what "done" looks like — be specific\n2. Break it into the smallest possible pieces — what\'s step 1?\n3. Open Focus Zone and set the timer for 25 minutes\n4. Work only on Step 1 — nothing else exists right now\n5. After 25 min, log what you did and set the next step\n\nWhat\'s the project? Tell me and I\'ll make these more specific.';
+    } else if(isGoalContext){
+      return (n||'Here\'s what I\'d do — ')+'5 steps to start making real progress on '+G+':\n\n1. Write your goal down with a specific deadline attached\n2. Identify the ONE thing blocking you right now\n3. Break that blocker into 3 small tasks in your Planner\n4. Mark the most important one "Must Do" and do it first today\n5. Check your habit tracker before bed — even one habit is a win\n\nWhich step feels furthest away right now?';
+    } else {
+      return (n||'Okay — ')+'here are 5 steps to get unstuck and moving right now:\n\n1. Write down exactly what you\'re trying to accomplish — one sentence\n2. Identify what\'s actually stopping you — be honest\n3. Break the task into 5 tiny steps using the Focus Zone Task Breaker\n4. Start Step 1 only — give it 10 minutes, nothing else\n5. Come back here and tell me what happened\n\nWhat specifically are you trying to make progress on?';
+    }
+  }
+
+
+  // ── SPECIFIC TASK HELP — most common real use case ──
+  if(isTaskHelp){
+    return pick([
+      n+'Open the Focus Zone right now. Use the Task Breaker — write what you\'re working on at the top, then break it into 5 steps. Your only job is Step 1. What specifically is the task?',
+      'What\'s actually blocking you — do you not know what to do next, or do you know and you\'re just not doing it? Those need completely different solutions.',
+      n+'Set a timer for 10 minutes. Not to finish it — just to work on it for 10 minutes. That\'s the whole goal. What happens after the timer is up to you.',
+      n+(hasADHD?'ADHD makes big tasks feel impossible. ':'')+'Make it smaller. What\'s the absolute first physical action you\'d take on this — something that takes under 3 minutes?'
+    ]);
+  }
+
+  // ── CAN'T START ──
+  if(isCantStart){
+    return pick([
+      n+'The hardest part of any task is the first 2 minutes. Open Focus Zone, use the Task Breaker, and write down 5 steps. Make Step 1 so small it feels almost stupid easy. What\'s the task you need to start?',
+      n+(hasADHD?'ADHD makes starting the hardest part — not finishing. ':'')+'Your brain needs a trigger. Set a 2-minute timer. Tell yourself you\'ll only work for 2 minutes. The resistance dies once you start.',
+      'What specifically is stopping you from starting? Is it the task itself, that you don\'t know where to begin, or something else going on? Tell me and we\'ll solve the right problem.'
+    ]);
+  }
+
+  // ── WIN ──
+  if(isWin){
+    return pick([
+      n+'That\'s real — don\'t scroll past it. What you just did is evidence that you can follow through. Write it down somewhere and look at it when doubt shows up. What\'s the next move from here?',
+      'Lock that in. That\'s not luck, that\'s you doing the work. '+(G?'One step closer to '+G+'. ':'')+'What\'s the next thing on the list?',
+      n+'Every win is proof against every future doubt. Remember this moment. Now — do you want to keep the momentum going, or take a real break first? Both are valid.',
+      'That matters more than you think. Most people never finish what they start. You did. What\'s next?'
+    ]);
+  }
+
+  // ── PROCRASTINATION ──
+  if(isProc){
+    return pick([
+      n+(hasProc?'Procrastination is the pattern you\'re working against. ':'')+'What exactly are you avoiding? Name it specifically — sometimes just naming it makes it 50% less scary. Then tell me the first step.',
+      hard?n+'You already know what to do. You\'re just not doing it. Open the Task Breaker right now — five steps. Start step 1. Stop thinking.':n+'You\'re not lazy. Something about this task feels wrong — too big, too vague, or too scary. Which one is it?',
+      n+'The procrastination loop looks like this: avoid → feel guilty → avoid more. Break it now. One task, five minutes, no excuses. What\'s the task?',
+      'Set your phone face down. Open the Focus Zone. Start the 25-min timer. '+(G?'You said you want '+G+' — this is how it happens.':'This is how it happens.')
+    ]);
+  }
+
+  // ── STUCK/FUNK ──
+  if(isStuck){
+    return pick([
+      n+'Funks don\'t break when you think harder. They break when you move. Open the Planner, add one tiny task, and do it. What\'s one thing — even small — you could do in the next 10 minutes?',
+      (hasADHD?n+'Low dopamine = everything feels pointless. That\'s brain chemistry, not reality. ':'')+'The move is action, not motivation. What\'s the smallest thing you could do that would feel like progress?',
+      n+'Don\'t try to fix the feeling. Just give your brain one win. Even something small. What\'s one thing you\'ve been meaning to do that would take under 15 minutes?',
+      soft?n+'It\'s okay to be here. But staying here doesn\'t move you forward. What\'s one gentle step you could take right now — not to solve everything, just to start?':n+'The funk ends when you act. Pick one thing. Do it. That\'s the only way out.'
+    ]);
+  }
+
+  // ── FOCUS/DISTRACTION ──
+  if(isFocus){
+    return pick([
+      n+(hasADHD?'Your brain is wired to seek novelty — ':'')+'Phone face down. One tab open. Focus Zone timer on 25 minutes. Tell me what task you\'re working on and let\'s get you started.',
+      'Distraction is a symptom — usually of a task that\'s too vague or too big. What specifically are you trying to work on? Let\'s make it concrete enough that your brain stops looking for an exit.',
+      n+'Try this: write down the one thing you need to focus on right now. Just seeing it in writing helps. Then start the Focus Zone timer and do only that for 25 min. What\'s the task?',
+      'Social media and distraction are dopamine shortcuts. '+(G?'But '+G+' doesn\'t get built on shortcuts. ':'')+'Close the tabs. What were you supposed to be doing before you got distracted?'
+    ]);
+  }
+
+  // ── OVERWHELM ──
+  if(isOverwhelm){
+    return pick([
+      n+(hasOver?'Overwhelm is your pattern — you already know this. ':'')+'Stop trying to do everything. You can only do one thing right now. What\'s the single most important task? Just that one.',
+      'Brain dump everything onto the Home page first — every task, worry, idea. Get it out of your head. Then come back here and tell me what\'s left. That\'s how we find the one thing.',
+      n+'When everything feels urgent, nothing gets done. Here\'s the filter: what\'s the one thing that if you did it today, everything else becomes easier or irrelevant? Do that.',
+      hard?n+'You don\'t need to solve everything. You need to do one thing. Pick it right now — what\'s it going to be?':n+'Let\'s slow down. Take a breath. Now tell me — what\'s the one thing you actually have to get done today?'
+    ]);
+  }
+
+  // ── SELF DOUBT ──
+  if(isDoubt){
+    return pick([
+      n+(hasDoubt?'You said self-doubt holds you back — so let\'s name it directly. ':'')+'What specifically are you doubting? Not vague "I can\'t do this" — what exact thing are you afraid won\'t work out?',
+      'Doubt is your brain protecting you from risk. But it\'s not a prediction. What\'s one thing you\'ve already accomplished — even small — that proves you\'re more capable than the doubt says?',
+      n+'The version of you that succeeds at '+(G||'what you want')+' felt this exact same doubt. They just kept going anyway. What\'s the next thing you can do right now, doubt and all?',
+      soft?n+'You\'re allowed to feel uncertain. But uncertainty doesn\'t mean stop. What\'s one small thing you know for sure you can do today?':n+'Your doubts are not facts. What do you actually know to be true about what you\'re capable of?'
+    ]);
+  }
+
+  // ── NEXT STEP ──
+  if(isNextStep){
+    return pick([
+      n+'Right now, the most important thing for '+(G||'your goal')+' is: what\'s the one task that if completed today, moves the needle the most? Add it to the Planner as your Must Do.',
+      'Here\'s how to figure out your next step: ask "what\'s the thing I\'ve been avoiding most?" — that\'s usually the most important thing. What comes up?',
+      n+'Go to the Planner. Add your most important task for today. Mark it Must Do. That\'s your next step — everything else is secondary. What do you want to add?',
+      (G?'Working toward '+G+' — ':'')+n+'what\'s the single action that moves that forward today? Not plan it, not research it — actually do it. What is it?'
+    ]);
+  }
+
+  // ── BUSINESS / PRODUCT ──
+  if(isBusiness){
+    return pick([
+      n+'Your notion business moves forward one action at a time. Right now, the most important thing is getting your product in front of people. Is your listing live yet? If not — that\'s today\'s Must Do.',
+      'Sales come from visibility, not perfection. The question isn\'t "is it ready enough" — it\'s "have enough people seen it?" What\'s your current plan to get it in front of more people today?',
+      n+(G?'You\'re building '+G+'. ':'')+'The biggest mistake is spending too long building before selling. Have you shown your product to real people yet? Even 5 people is data. Go do that today.',
+      n+'What specifically is stuck with your '+( m.includes('notion')?'notion ':'')+'business right now — the product itself, getting traffic, making sales, or something else? Tell me exactly and we\'ll fix the right thing.'
+    ]);
+  }
+
+  // ── HABITS ──
+  if(isHabit){
+    return pick([
+      n+'Streaks break — that\'s not failure, that\'s normal. The only question is: do you start again today or wait until Monday? Go to Habits and check off one thing right now.',
+      'Consistency isn\'t about being perfect. It\'s about the percentage. Miss a day, fine. Miss a week, that\'s a pattern. What\'s the habit you\'re struggling with most right now?',
+      n+'The habit you\'re avoiding — why specifically? Is it the time, the effort, or is there a friction point that makes it hard to start? Let\'s fix the friction.',
+      'Two-day rule: never miss the same habit twice in a row. You missed yesterday. What\'s stopping you from doing it today?'
+    ]);
+  }
+
+  // ── MONEY ──
+  if(isMoney){
+    return pick([
+      n+'Money stress is one of the heaviest things to carry. Go to the Money Mode page — enter your debts and run the snowball calculator. Having a plan changes the emotional weight of it completely.',
+      'The debt snowball works because it gives your brain wins. Smallest balance first — not highest interest. Each payoff rolls into the next. Have you mapped it out yet?',
+      n+'Financial anxiety gets worse when it\'s vague. The moment you write the numbers down and make a plan, it becomes manageable. It\'s still hard, but it\'s not terrifying. Go to Money Mode.',
+      'What\'s the specific money situation right now? Debt, not enough income, or both? Let\'s figure out the one thing you can actually control today.'
+    ]);
+  }
+
+  // ── TIRED/BURNOUT ──
+  if(isTired){
+    return pick([
+      n+'If you\'re genuinely burned out, pushing harder makes it worse. Rest is not quitting — it\'s maintenance. What does your body actually need right now?',
+      'On empty days, do the minimum version of your habits. Even 10%. One glass of water. One task. That\'s still a win. What\'s the one smallest thing you could do today?',
+      n+'Burnout usually means you\'ve been giving more than you\'ve been restoring. What have you done this week that was just for you — not productive, not useful, just restorative?',
+      'Rest today, build tomorrow. But before you fully check out — is there one thing, under 10 minutes, that you\'d feel good about completing first?'
+    ]);
+  }
+
+  // ── ANGER ──
+  if(isAnger){
+    return pick([
+      n+'That frustration is real — and it\'s information. What specifically is making you angry? Sometimes the thing that\'s most frustrating is also the thing you care about most.',
+      'Use it. Frustrated energy is powerful when it\'s directed. What\'s the one thing you can actually change or control in this situation right now?',
+      n+'What would make this better — not perfect, not solved completely, but actually better? Tell me and let\'s figure out if it\'s within your control.',
+    ]);
+  }
+
+  // ── PERSONAL/RELATIONSHIP ──
+  if(isPersonal){
+    return pick([
+      n+'That sounds heavy. Building something while dealing with personal stuff is genuinely hard. You don\'t have to separate the two — just tell me what\'s going on.',
+      'What you\'re feeling is valid. And your work still matters. Is there anything from what you\'re going through that\'s directly blocking you from '+(G||'what you want to build')+'?',
+      n+'You don\'t have to have it all together to keep going. What\'s one thing — just one — that you can do today that\'s still a step forward?'
+    ]);
+  }
+
+  // ── FALLBACK — smarter general responses that actually engage ──
+  var generalResponses=[
+    n+'Tell me exactly what\'s going on right now. Not the overview — the specific thing that feels hardest in this moment.',
+    n+'What would a win look like for you today? Even a small one. Tell me that and we\'ll figure out how to get there.',
+    'What\'s the one thing you\'ve been putting off the longest? Let\'s start there.',
+    n+'If I could take one thing off your mental plate right now — what would it be? That\'s probably the thing we need to work on.',
+    (G?n+'You set '+G+' as your goal. What\'s actually standing between you and the next step toward that?':n+'What\'s the thing that\'s been sitting on your to-do list the longest? Tell me and we\'ll break it down.'),
+    n+'Be specific — what exactly is the situation? The more specific you are, the more useful I can be.',
+    'What happened today? Walk me through it — sometimes just saying it out loud (or typing it) is the thing that unlocks the next move.',
+    n+'Is the problem that you don\'t know what to do, or that you know and you\'re not doing it? Those need completely different solutions.'
+  ];
+  return pick(generalResponses);
+}
+
+
+function buildSys(){
+  return 'You are the Clear Mind Coach inside Clear Mind Co.\n'+
+    'User: '+(U.name||'the user')+'\n'+
+    'Goal: '+(U.goal||'not set')+'\n'+
+    'Why: '+(U.why||'not set')+'\n'+
+    'Challenges: '+(U.challenges.length?U.challenges.join(', '):'not set')+'\n'+
+    'Push style: '+(U.push||'medium')+'\n\n'+
+    'Rules: Under 90 words. Short paragraphs. No lists. Reference their name/goal/challenges specifically. One actionable step in next 10 minutes. If professional help needed, gently suggest it. Never start with "I". Never say "Great question!" or "Absolutely!"';
+}
+
+function addMsg(role,text){
+  var box=document.getElementById('chatMsgs');if(!box)return;
+  var div=document.createElement('div');div.className='msg '+role;
+  var av=document.createElement('div');av.className='av '+(role==='coach'?'avc':'avu');av.textContent=role==='coach'?'✨':'You';
+  var bubble=document.createElement('div');bubble.className='bubble';bubble.innerHTML=text.replace(/\n/g,'<br>');
+  div.appendChild(av);div.appendChild(bubble);box.appendChild(div);box.scrollTop=box.scrollHeight;
+}
+function showTyping(){
+  var box=document.getElementById('chatMsgs');if(!box)return;
+  var div=document.createElement('div');div.className='msg coach';div.id='typing';
+  div.innerHTML='<div class="av avc">✨</div><div class="bubble"><div style="display:flex;gap:4px;padding:4px 2px"><div class="td"></div><div class="td"></div><div class="td"></div></div></div>';
+  box.appendChild(div);box.scrollTop=box.scrollHeight;
+}
+function removeTyping(){var t=document.getElementById('typing');if(t)t.remove();}
+
+async function callCoach(msg){
+  chatHist.push({role:'user',content:msg});
+  showTyping();
+  var btn=document.getElementById('sendBtn');if(btn)btn.disabled=true;
+
+  // Check if user has provided an API key
+  var apiKey=(localStorage.getItem('cmc_api_key')||'').trim();
+
+  if(apiKey){
+    // Live AI response with their key
+    try{
+      var res=await fetch('https://api.anthropic.com/v1/messages',{
+        method:'POST',
+        headers:{'Content-Type':'application/json','x-api-key':apiKey,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
+        body:JSON.stringify({model:'claude-haiku-4-5-20251001',max_tokens:250,system:buildSys(),messages:chatHist})
+      });
+      var data=await res.json();
+      if(data.content&&data.content[0]&&data.content[0].text){
+        var reply=data.content[0].text;
+        chatHist.push({role:'assistant',content:reply});
+        setTimeout(function(){removeTyping();addMsg('coach',reply);if(btn)btn.disabled=false;},600);
+        return;
+      }
+    }catch(e){}
+  }
+
+  // Smart offline fallback — always works
+  var reply=smartCoachReply(msg);
+  chatHist.push({role:'assistant',content:reply});
+  // Small delay so it feels real
+  setTimeout(function(){removeTyping();addMsg('coach',reply);if(btn)btn.disabled=false;},900);
+}
+
+function sendMsg(){var inp=document.getElementById('chatInp');if(!inp||(inp.value||'').trim()==='')return;var msg=inp.value.trim();inp.value='';addMsg('user',msg);callCoach(msg);}
+function sendQ(q){goPage('coach','pn-coach');addMsg('user',q);callCoach(q);}
+function handleKey(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendMsg();}}
+
+// ─── CALENDAR ───
+var calYear=new Date().getFullYear(),calMonth=new Date().getMonth(),calSelectedDay=null;
+var CAL_MONTHS=['January','February','March','April','May','June','July','August','September','October','November','December'];
+var CAL_DAYS=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+function openCal(){document.getElementById('calModal').classList.add('show');renderCal();}
+function closeCal(){document.getElementById('calModal').classList.remove('show');document.getElementById('calEntryArea').style.display='none';calSelectedDay=null;}
+function calNav(dir){calMonth+=dir;if(calMonth>11){calMonth=0;calYear++;}if(calMonth<0){calMonth=11;calYear--;}renderCal();}
+function renderCal(){
+  var title=document.getElementById('calTitle');if(title)title.textContent=CAL_MONTHS[calMonth]+' '+calYear;
+  var grid=document.getElementById('calGrid');if(!grid)return;
+  grid.innerHTML='';
+  CAL_DAYS.forEach(function(d){var el=document.createElement('div');el.className='cal-day-hdr';el.textContent=d;grid.appendChild(el);});
+  var first=new Date(calYear,calMonth,1).getDay();
+  var daysIn=new Date(calYear,calMonth+1,0).getDate();
+  var today=new Date();
+  for(var i=0;i<first;i++){var em=document.createElement('div');em.className='cal-day empty';em.textContent='.';grid.appendChild(em);}
+  for(var d=1;d<=daysIn;d++){
+    var el=document.createElement('div');el.className='cal-day';
+    var key=calYear+'-'+calMonth+'-'+d;
+    if(today.getFullYear()===calYear&&today.getMonth()===calMonth&&today.getDate()===d)el.classList.add('today');
+    if(U.calNotes[key])el.classList.add('has-note');
+    el.innerHTML='<span>'+d+'</span>';
+    (function(day,k){el.onclick=function(){calSelectedDay=day;calSelectedKey=k;showCalEntry(day,k);};;})(d,key);
+    grid.appendChild(el);
+  }
+}
+var calSelectedKey='';
+function showCalEntry(day,key){
+  var area=document.getElementById('calEntryArea');if(!area)return;
+  area.style.display='block';
+  var t=document.getElementById('calEntryTitle');if(t)t.textContent=CAL_MONTHS[calMonth]+' '+day+', '+calYear;
+  var n=U.calNotes[key]||{};
+  var gi=document.getElementById('calGoalInp');if(gi)gi.value=n.goal||'';
+  var ni=document.getElementById('calNoteInp');if(ni)ni.value=n.note||'';
+}
+function saveCalEntry(){
+  if(!calSelectedKey)return;
+  var g=(document.getElementById('calGoalInp').value||'').trim();
+  var n=(document.getElementById('calNoteInp').value||'').trim();
+  if(g||n){U.calNotes[calSelectedKey]={goal:g,note:n};}
+  else{delete U.calNotes[calSelectedKey];}
+  renderCal();showCalEntry(calSelectedDay,calSelectedKey);saveData();
+  cel('📅','Day planned.','You set an intention for that day. That\'s how clarity is built.','Review it the morning of — and make it happen.');
+}
+
+// ─── BOOTSTRAP — runs after DOM is ready ───
+function runApp(){
+  try{
+  try{loadDarkPref();}catch(e){}
+  try{
+    var hasData=loadData();
+    if(hasData&&U.name){
+      var modal=document.getElementById('setup');
+      if(modal)modal.classList.add('gone');
+      initApp();
+      return;
+    }
+  }catch(e){
+    // Something went wrong with saved data — clear it and start fresh
+    try{localStorage.removeItem(SAVE_KEY);}catch(e2){}
+    // Reset user object
+    U={name:'',goal:'',why:'',challenges:[],push:'medium',growthStyle:'flower',tasks:[],goals:[],jEntries:[],habits:[],calNotes:{}};
+    growthScore=0;currentStreak=1;
+  }
+  // Show setup fresh — make sure step 0 is visible
+  var s=document.getElementById('s0');if(s)s.classList.add('on');
+  }catch(e){console.warn('CMC startup:',e);try{document.getElementById('setup').style.display='flex';}catch(e2){}}
+}
+// Run when DOM is ready
+if(document.readyState==='loading'){
+  document.addEventListener('DOMContentLoaded',runApp);
+}else{
+  runApp();
+}
+
+
+// ─── NATIVE CANVAS CHART — no dependencies ───
+function drawDebtChart(labels,data){
+  var canvas=document.getElementById('debtChart');
+  if(!canvas)return;
+  var ctx=canvas.getContext('2d');
+  var W=canvas.offsetWidth||300;
+  var H=130;
+  canvas.width=W*window.devicePixelRatio;
+  canvas.height=H*window.devicePixelRatio;
+  canvas.style.width=W+'px';
+  canvas.style.height=H+'px';
+  ctx.scale(window.devicePixelRatio,window.devicePixelRatio);
+  var pad={t:10,r:10,b:28,l:44};
+  var gW=W-pad.l-pad.r;
+  var gH=H-pad.t-pad.b;
+  var max=Math.max.apply(null,data)||1;
+  var min=0;
+  var range=max-min||1;
+  // Background
+  ctx.clearRect(0,0,W,H);
+  // Grid lines
+  ctx.strokeStyle='rgba(0,0,0,0.05)';
+  ctx.lineWidth=1;
+  for(var g=0;g<=4;g++){
+    var gy=pad.t+gH*(1-g/4);
+    ctx.beginPath();ctx.moveTo(pad.l,gy);ctx.lineTo(pad.l+gW,gy);ctx.stroke();
+    // Y labels
+    var val=min+(range*g/4);
+    ctx.fillStyle='#9C8E7A';
+    ctx.font='9px DM Sans,sans-serif';
+    ctx.textAlign='right';
+    var lbl=val>=1000?'$'+(val/1000).toFixed(0)+'k':'$'+Math.round(val);
+    ctx.fillText(lbl,pad.l-4,gy+3);
+  }
+  // Fill area under line
+  if(data.length>1){
+    ctx.beginPath();
+    ctx.moveTo(pad.l,pad.t+gH*(1-(data[0]-min)/range));
+    for(var i=1;i<data.length;i++){
+      var x1=pad.l+gW*(i-1)/(data.length-1);
+      var y1=pad.t+gH*(1-(data[i-1]-min)/range);
+      var x2=pad.l+gW*i/(data.length-1);
+      var y2=pad.t+gH*(1-(data[i]-min)/range);
+      var cpx=(x1+x2)/2;
+      ctx.bezierCurveTo(cpx,y1,cpx,y2,x2,y2);
+    }
+    ctx.lineTo(pad.l+gW,pad.t+gH);
+    ctx.lineTo(pad.l,pad.t+gH);
+    ctx.closePath();
+    ctx.fillStyle='rgba(155,111,62,0.08)';
+    ctx.fill();
+    // Line
+    ctx.beginPath();
+    ctx.moveTo(pad.l,pad.t+gH*(1-(data[0]-min)/range));
+    for(var i=1;i<data.length;i++){
+      var x1=pad.l+gW*(i-1)/(data.length-1);
+      var y1=pad.t+gH*(1-(data[i-1]-min)/range);
+      var x2=pad.l+gW*i/(data.length-1);
+      var y2=pad.t+gH*(1-(data[i]-min)/range);
+      var cpx=(x1+x2)/2;
+      ctx.bezierCurveTo(cpx,y1,cpx,y2,x2,y2);
+    }
+    ctx.strokeStyle='#9B6F3E';
+    ctx.lineWidth=2;
+    ctx.stroke();
+    // Dots
+    for(var i=0;i<data.length;i++){
+      var x=pad.l+gW*i/(data.length-1);
+      var y=pad.t+gH*(1-(data[i]-min)/range);
+      ctx.beginPath();ctx.arc(x,y,3,0,Math.PI*2);
+      ctx.fillStyle='#9B6F3E';ctx.fill();
+    }
+  }
+  // X labels — show first, middle, last
+  var show=[0,Math.floor((labels.length-1)/2),labels.length-1];
+  ctx.fillStyle='#9C8E7A';ctx.font='9px DM Sans,sans-serif';ctx.textAlign='center';
+  show.forEach(function(i){
+    if(i<labels.length){
+      var x=pad.l+gW*i/(labels.length-1||1);
+      ctx.fillText(labels[i],x,H-6);
+    }
+  });
+}
+
+// ─── DEBT ───
+var dRowN=0,origT=0,paidN=0;
+function addDebtRow(name,bal,min,rate){
+  dRowN++;var id='dr'+dRowN;
+  var el=document.createElement('div');el.className='d-row';el.id=id;
+  el.innerHTML='<input class="d-inp" placeholder="e.g. Visa" value="'+(name||'')+'"><input class="d-inp" type="number" placeholder="1500" value="'+(bal||'')+'" min="0"><input class="d-inp" type="number" placeholder="45" value="'+(min||'')+'" min="0"><input class="d-inp" type="number" placeholder="19.9" value="'+(rate||'')+'" min="0" max="100"><button class="d-del" onclick="document.getElementById(\''+id+'\').remove()">✕</button>';
+  document.getElementById('debtInputRows').appendChild(el);
+}
+function calcDebt(){
+  var rows=document.querySelectorAll('#debtInputRows .d-row'),debts=[];
+  rows.forEach(function(r){var ins=r.querySelectorAll('input');var b=parseFloat(ins[1].value)||0;if(b>0)debts.push({name:(ins[0].value||'').trim()||'Unnamed',balance:b,orig:b,min:parseFloat(ins[2].value)||0,rate:parseFloat(ins[3].value)||0});});
+  if(!debts.length)return;
+  debts.sort(function(a,b){return a.balance-b.balance;});
+  origT=debts.reduce(function(s,d){return s+d.balance;},0);
+  var extra=parseFloat(document.getElementById('extraPay').value)||0;
+  var sims=debts.map(function(d){return{balance:d.balance,orig:d.orig,min:d.min,rate:d.rate,name:d.name};});
+  var months=0,interest=0,freed=0,payAt=debts.map(function(){return null;});
+  var cL=['Now'],cD=[Math.round(origT)];
+  while(sims.some(function(d){return d.balance>0;})&&months<360){
+    months++;var avail=extra+freed,used=false;
+    sims.forEach(function(d){if(d.balance>0){var ii=d.balance*(d.rate/100/12);interest+=ii;d.balance+=ii;}});
+    sims.forEach(function(d,i){if(d.balance<=0)return;var pay=d.min+(used?0:avail);used=true;d.balance=Math.max(0,d.balance-pay);if(d.balance===0&&payAt[i]===null){payAt[i]=months;freed+=d.min;}});
+    if(months<=6||months%3===0){var rem=sims.reduce(function(s,d){return s+Math.max(0,d.balance);},0);cL.push('Mo'+months);cD.push(Math.round(rem));}
+  }
+  if(months>=360)months=360;
+  document.getElementById('debtResults').style.display='block';
+  var yrs=Math.floor(months/12),mos=months%12,tStr=yrs>0?yrs+'y'+(mos?' '+mos+'m':''):mos+'m';
+  document.getElementById('sovT').textContent='$'+origT.toLocaleString();
+  document.getElementById('sovF').textContent=tStr;
+  document.getElementById('sovS').textContent='$'+Math.round(interest).toLocaleString();
+  document.getElementById('owSub').textContent='Debt free in '+tStr+' using the snowball.';
+  document.getElementById('owPct').textContent='0%';
+  document.getElementById('owFill').style.width='0%';
+  var cols=['#8B6C42','#A07848','#B8872A','#5C7A5A','#9B4520'],html='';
+  debts.forEach(function(d,i){
+    var pM=payAt[i],pStr=pM?(pM<=12?pM+'mo':(Math.floor(pM/12)+'y'+(pM%12?' '+pM%12+'m':''))):' — ';
+    var c=cols[i%cols.length];
+    html+='<div class="debt-item" id="rd'+i+'"><div class="di-top"><div class="di-name">'+d.name+'</div><span class="di-tag '+(i===0?'dt-a':'dt-q')+'">'+(i===0?'Attack Now — Step 3':'Queue — Steps 1 & 2')+'</span></div>';
+    html+='<div class="di-info">$'+d.orig.toLocaleString()+' balance &nbsp;·&nbsp; $'+d.min+'/mo minimum &nbsp;·&nbsp; '+d.rate+'% APR</div>';
+    html+='<div class="di-track"><div class="di-bar" id="db'+i+'" style="width:100%;background:'+c+'"></div></div>';
+    html+='<div class="di-foot"><span class="di-eta">Gone in '+pStr+'</span><button class="paid-btn" onclick="markPaid('+i+',\''+d.name+'\','+d.orig+')">Mark Paid ✓</button></div></div>';
+  });
+  document.getElementById('debtList').innerHTML=html;
+  drawDebtChart(cL,cD);
+  document.getElementById('debtResults').scrollIntoView({behavior:'smooth',block:'start'});
+}
+function markPaid(idx,name,amt){
+  paidN++;var el=document.getElementById('rd'+idx);if(!el)return;
+  var tag=el.querySelector('.di-tag');if(tag){tag.textContent='Paid Off — Step 4 Complete';tag.className='di-tag dt-d';}
+  var mb=el.querySelector('.paid-btn');if(mb)mb.style.display='none';
+  var bar=document.getElementById('db'+idx);if(bar)bar.style.width='0';
+  el.style.opacity='.42';
+  var all=document.querySelectorAll('.debt-item'),found=false;
+  all.forEach(function(item){if(!found&&item.style.opacity!=='.42'){var t=item.querySelector('.di-tag');if(t){t.textContent='Attack Now — Roll the snowball';t.className='di-tag dt-a';}found=true;}});
+  var tot=document.querySelectorAll('.debt-item').length;
+  var pct=Math.min(100,Math.round(paidN/tot*100));
+  document.getElementById('owPct').textContent=pct+'%';document.getElementById('owFill').style.width=pct+'%';
+  addGrowthScore(40);
+  var rs=['Your favorite meal tonight — one debt gone','A real night out — the snowball is rolling','Buy something you\'ve been wanting','Plan a trip — you are debt free'];
+  var ts=['Debt eliminated.','Snowball growing.','Unstoppable.','Completely free.'];
+  var ms=[name+' is gone. $'+amt.toLocaleString()+' eliminated. Now roll that payment onto the next one — that\'s Step 4.',
+    'Two down. The snowball is real now. Watch how fast the next one falls.',
+    'Three debts gone. You\'re doing what most people only talk about.',
+    'Every single debt — gone. You made this real.'];
+  var i=Math.min(paidN-1,3);
+  cel(i===3?'👑':'🎉',ts[i],ms[i],rs[i]);
+}
+
+// ─── DARK MODE ───
+var isDark=false;
+function toggleDark(){
+  isDark=!isDark;
+  document.body.classList.toggle('dark-mode',isDark);
+  updateThemePill();
+  try{localStorage.setItem('cmc_dark',isDark?'1':'0');}catch(e){}
+}
+function updateThemePill(){
+  try{
+    var lp=document.getElementById('lightPill');
+    var dp=document.getElementById('darkPill');
+    if(!lp||!dp)return;
+    if(isDark){lp.style.background='transparent';lp.style.color='var(--dim)';dp.style.background='var(--dark)';dp.style.color='var(--white)';}
+    else{lp.style.background='var(--dark)';lp.style.color='var(--white)';dp.style.background='transparent';dp.style.color='var(--dim)';}
+  }catch(e){}
+}
+function loadDarkPref(){
+  try{if(localStorage.getItem('cmc_dark')==='1'){isDark=true;if(document.body)document.body.classList.add('dark-mode');}}catch(e){}
+  try{updateThemePill();}catch(e){}
+}
+// loadDarkPref called after DOM ready (see bootstrap)
+
+// ─── PWA INSTALL ───
+var deferredInstall=null;
+window.addEventListener('beforeinstallprompt',function(e){
+  e.preventDefault();deferredInstall=e;
+  var btn=document.getElementById('installBtn');
+  if(btn)btn.style.display='flex';
+});
+function installApp(){
+  if(deferredInstall){
+    deferredInstall.prompt();
+    deferredInstall.userChoice.then(function(){deferredInstall=null;var btn=document.getElementById('installBtn');if(btn)btn.style.display='none';});
+  } else {
+    // Show guide page with install instructions
+    goPage('guide','pn-guide');
+    cel('📲','Install to your home screen','Go to the Guide page and follow the install instructions for your device.','It takes about 30 seconds and opens like a real app.');
+  }
+}
+
+// ─── EXPORT / IMPORT ───
+function exportData(){
+  var toExport={
+    version:'cmc_v10',
+    exported:new Date().toISOString(),
+    U:U,
+    growthScore:growthScore,
+    streak:currentStreak,
+    lastDate:lastOpenDate
+  };
+  var blob=new Blob([JSON.stringify(toExport,null,2)],{type:'application/json'});
+  var url=URL.createObjectURL(blob);
+  var a=document.createElement('a');
+  a.href=url;
+  a.download='ClearMindCo_backup_'+new Date().toISOString().split('T')[0]+'.json';
+  document.body.appendChild(a);a.click();
+  document.body.removeChild(a);URL.revokeObjectURL(url);
+  cel('✦','Data exported.','Your backup file has downloaded. Transfer it to your other device and use Import Data to restore everything.','Keep this file somewhere safe — it\'s your complete backup.');
+}
+function importData(){
+  var f=document.getElementById('importFile');if(f)f.click();
+}
+function handleImport(e){
+  var file=e.target.files&&e.target.files[0];if(!file)return;
+  var reader=new FileReader();
+  reader.onload=function(ev){
+    try{
+      var saved=JSON.parse(ev.target.result);
+      if(!saved.U)throw new Error('Invalid file');
+      // Restore everything
+      Object.assign(U,saved.U);
+      if(saved.growthScore)growthScore=saved.growthScore;
+      if(saved.streak)currentStreak=saved.streak;
+      if(saved.lastDate)lastOpenDate=saved.lastDate;
+      saveData();
+      // Re-render everything
+      renderTasks();renderHabits();renderGoals();renderJ();renderGrowth();
+      // Update greeting and journal date
+      var h=new Date().getHours();
+      var g=h<12?'Good morning':h<18?'Good afternoon':'Good evening';
+      var el=document.getElementById('greeting');if(el)el.textContent=U.name?g+', '+U.name+'.':g+'.';
+      var stStr=document.getElementById('stStreak');if(stStr)stStr.textContent=currentStreak;
+      if(U.name){var cn=document.getElementById('coachName');if(cn)cn.textContent=U.name+"'s Clear Mind Coach";}
+      cel('✦','Data restored.','Everything is back — your goals, habits, streaks, tasks, and journal entries. Right where you left them.','You\'re all set. Keep going.');
+    }catch(err){
+      cel('⚠️','Import failed.','The file doesn\'t look right. Make sure you\'re using a backup file exported from Clear Mind Co.','Try exporting again from your other device.');
+    }
+    e.target.value='';
+  };
+  reader.readAsText(file);
+}
+
+// ─── INTERACTIVE TOUR — simple, bottom-anchored, always works ───
+var TOUR_STEPS=[
+  {page:'home',navId:'pn-home',icon:'🏠',title:'Welcome to Clear Mind Co.',body:'This is your daily dashboard. Every morning, open this first — before email, before social media. Let\'s walk through every section in 2 minutes.'},
+  {page:'home',navId:'pn-home',icon:'✦',title:'Your One Focus',body:'The dark card at the top shows your single most important task for today. Just one. Add a task in Planner and it appears here automatically. One clear target — that\'s how momentum starts.'},
+  {page:'home',navId:'pn-home',icon:'🌱',title:'Dopamine Reward System',body:'Every task you complete, every habit you log, every focus session grows your reward. Your brain gets a real dopamine hit for showing up. Watch it level up as your streak builds.'},
+  {page:'tasks',navId:'pn-tasks',icon:'📋',title:'Daily Planner',body:'Add up to 3 tasks here. Mark the most important one "Must Do" — that\'s your MIT. Do it first, before anything else. If you only do one thing today, let it be that.'},
+  {page:'habits',navId:'pn-habits',icon:'✅',title:'Habit Tracker',body:'One tap to check off each habit. Add your own with the Add button. Missed a day? No shame — just start again. Streaks build with consistency, not perfection.'},
+  {page:'focus',navId:'pn-focus',icon:'⏱',title:'Focus Zone',body:'25-minute Pomodoro timer. One task, no interruptions. If a task feels too big, the Task Breaker below splits it into 5 small steps. Start with Step 1 only — motivation comes after starting.'},
+  {page:'coach',navId:'pn-coach',icon:'✨',title:'Your AI Coach',body:'Not a generic chatbot. Your coach knows your name, your goal, and what holds you back. Type what\'s going on and it gives you a specific next step every time. Use the quick-start buttons to begin.'},
+  {page:'money',navId:'pn-money',icon:'💰',title:'Money Mode',body:'Enter your debts and tap Calculate. Dave Ramsey\'s debt snowball — smallest balance first. See your exact payoff date and how much interest you save. Mark each one paid as you go.'},
+  {page:'home',navId:'pn-home',icon:'🎯',title:'You\'re ready. Let\'s go.',body:'Home every morning. One Must Do task. Habits before bed. Coach when you hit a wall.\n\nSmall steps, every day. That\'s how this gets built.\n\nYou\'ve got this.',isLast:true}
+];
+var tourStep=0,tourActive=false;
+
+function startTour(){
+  tourStep=0;tourActive=true;
+  document.getElementById('tourOverlay').classList.add('active');
+  renderTour();
+}
+function renderTour(){
+  var step=TOUR_STEPS[tourStep];
+  if(!step){endTour();return;}
+  // Navigate page
+  goPage(step.page,step.navId);
+  // Update content
+  document.getElementById('tourIcon').textContent=step.icon||'✦';
+  document.getElementById('tourTitle').textContent=step.title;
+  document.getElementById('tourBody').innerHTML=step.body.replace(/\n/g,'<br>');
+  document.getElementById('tourStepLabel').textContent='STEP '+(tourStep+1)+' OF '+TOUR_STEPS.length;
+  var nb=document.getElementById('tourNextBtn');
+  if(nb)nb.textContent=step.isLast?'Done — start using it ✓':'Next →';
+  // Dots
+  var de=document.getElementById('tourDots');
+  if(de){
+    de.innerHTML='';
+    TOUR_STEPS.forEach(function(_,i){
+      var d=document.createElement('div');
+      d.className='tour-dot'+(i===tourStep?' on':'');
+      de.appendChild(d);
+    });
+  }
+  // Always dim backdrop, always show card at bottom — no positioning math
+  var backdrop=document.getElementById('tourBackdrop');
+  var card=document.getElementById('tourCard');
+  var highlight=document.getElementById('tourHighlight');
+  if(backdrop)backdrop.classList.add('dim');
+  if(highlight)highlight.style.display='none';
+  if(card)card.style.display='block';
+}
+function tourNext(){
+  tourStep++;
+  if(tourStep>=TOUR_STEPS.length){endTour();return;}
+  renderTour();
+}
+function tourSkip(){endTour();}
+function endTour(){
+  tourActive=false;
+  var ov=document.getElementById('tourOverlay');
+  var bd=document.getElementById('tourBackdrop');
+  var cd=document.getElementById('tourCard');
+  var hl=document.getElementById('tourHighlight');
+  if(ov)ov.classList.remove('active');
+  if(bd)bd.classList.remove('dim');
+  if(cd)cd.style.display='none';
+  if(hl)hl.style.display='none';
+  try{localStorage.setItem('cmc_tour_done','1');}catch(e){}
+  goPage('home','pn-home');
+  setTimeout(function(){
+    cel('✦','Tour complete.','Now you know exactly how it works. Add your first task and start building.','Check off one habit before you close this today.');
+  },300);
+}
+
+
+// ─── ADD TO CALENDAR ───
+function addTasksToCalendar(){
+  var tasks=U.tasks.filter(function(t){return !t.done;});
+  if(!tasks.length){cel('📅','No tasks to add','Add some tasks to your planner first, then tap Add to Calendar.','Tap the Planner tab to get started.');return;}
+  var today=new Date();
+  var dateStr=today.getFullYear()+('0'+(today.getMonth()+1)).slice(-2)+('0'+today.getDate()).slice(-2);
+  var summary=tasks.map(function(t){return (t.pri==='must'?'★ ':t.pri==='should'?'• ':'○ ')+t.name;}).join('\n');
+  var title='Clear Mind Co. — Today\'s Tasks';
+  var desc=summary.replace(/
+/g,'\n');
+  // Build ICS file — works on iPhone Calendar, Google Calendar, Outlook
+  var ics=[
+    'BEGIN:VCALENDAR',
+    'VERSION:2.0',
+    'PRODID:-//Clear Mind Co.//FOCUSMODE//EN',
+    'BEGIN:VEVENT',
+    'DTSTART:'+dateStr+'T080000',
+    'DTEND:'+dateStr+'T090000',
+    'SUMMARY:'+title,
+    'DESCRIPTION:'+desc,
+    'BEGIN:VALARM',
+    'TRIGGER:-PT15M',
+    'ACTION:DISPLAY',
+    'DESCRIPTION:Time to work on your Must Do task',
+    'END:VALARM',
+    'END:VEVENT',
+    'END:VCALENDAR'
+  ].join('\r\n');
+  var blob=new Blob([ics],{type:'text/calendar;charset=utf-8'});
+  var url=URL.createObjectURL(blob);
+  var a=document.createElement('a');
+  a.href=url;a.download='clearmindco-tasks.ics';
+  document.body.appendChild(a);a.click();
+  document.body.removeChild(a);URL.revokeObjectURL(url);
+  cel('📅','Tasks added to calendar!','Tap the downloaded file to open it in your iPhone Calendar, Google Calendar, or Outlook. It adds a reminder for 8am with all your tasks listed.','Set your alarm and get it done.');
+}
+
+function cel(e,t,m,r){
+  document.getElementById('celE').textContent=e;document.getElementById('celT').textContent=t;
+  document.getElementById('celM').textContent=m;document.getElementById('celR').textContent=r;
+  document.getElementById('overlay').classList.add('show');
+}
+</script>
+
+<!-- INTERACTIVE TOUR OVERLAY -->
+
+<div class="tour-overlay" id="tourOverlay">
+  <div class="tour-backdrop" id="tourBackdrop" onclick="tourSkip()"></div>
+  <div class="tour-highlight" id="tourHighlight" style="display:none"></div>
+  <div class="tour-card" id="tourCard" style="display:none">
+    <div class="tour-step-badge">
+      <span id="tourStepLabel">STEP 1 OF 9</span>
+      <div class="tour-step-dots" id="tourDots"></div>
+    </div>
+    <div style="display:flex;align-items:flex-start;gap:11px;margin-bottom:10px;">
+      <div style="font-size:24px;flex-shrink:0;line-height:1.2;" id="tourIcon">✦</div>
+      <div class="tour-title" id="tourTitle"></div>
+    </div>
+    <div class="tour-body" id="tourBody"></div>
+    <div class="tour-actions">
+      <button class="tour-next" id="tourNextBtn" onclick="tourNext()">Next →</button>
+      <button class="tour-skip" onclick="tourSkip()">Skip</button>
+    </div>
+  </div>
+</div>
+
+-e
+
+</body>
+</html>
